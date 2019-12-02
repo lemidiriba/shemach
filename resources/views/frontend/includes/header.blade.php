@@ -1,7 +1,8 @@
 <header class="section-header">
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="#"><img class="logo" src="{{ asset('/img/frontend/logos/logo-alibaba.png') }}" alt="alibaba style e-commerce html
+            <a class="navbar-brand" href="#"><img class="logo" src="{{ asset('/img/frontend/logos/logo-alibaba.png') }}"
+                    alt="alibaba style e-commerce html
 							template file" title="alibaba e-commerce html css theme"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop"
                 aria-controls="navbarTop" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,11 +92,11 @@
                     <div class="widgets-wrap float-right row no-gutters py-1">
                         <div class="col-auto">
                             <nav class="navbar navbar-expand-lg navbar-light ">
-                               
+
 
                                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                                    aria-label="@lang('labels.general.toggle_navigation')">
+                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="@lang('labels.general.toggle_navigation')">
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
 
@@ -103,8 +104,9 @@
                                     <ul class="navbar-nav">
                                         @if(config('locale.status') && count(config('locale.languages')) > 1)
                                         <li class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">@lang('menus.language-picker.language')
+                                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">@lang('menus.language-picker.language')
                                                 ({{ strtoupper(app()->getLocale()) }})</a>
 
                                             @include('includes.partials.lang')
@@ -129,8 +131,9 @@
                                         @endif
                                         @else
                                         <li class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">{{ $logged_in_user->name }}</a>
+                                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">{{ $logged_in_user->name }}</a>
 
                                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
                                                 @can('view backend')
@@ -140,7 +143,8 @@
 
                                                 <a href="{{ route('frontend.user.account') }}"
                                                     class="dropdown-item {{ active_class(Route::is('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
-                                                <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item">@lang('navs.general.logout')</a>
+                                                <a href="{{ route('frontend.auth.logout') }}"
+                                                    class="dropdown-item">@lang('navs.general.logout')</a>
                                             </div>
                                         </li>
                                         @endguest

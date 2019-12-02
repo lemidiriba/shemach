@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\User\AccountController;
@@ -25,12 +24,26 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
     Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         // User Dashboard Specific
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('product/{id}', [DashboardController::class, 'product'])->name('product');
 
         // User Account Specific
         Route::get('account', [AccountController::class, 'index'])->name('account');
 
         // User Profile Specific
         Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    });
+
+});
+
+//shop route
+Route::group(['middleware' => ['auth', 'password_expires']], function () {
+    Route::group(['namespace' => 'Shop'], function () {
+        //shop
+        Route::resource('shop', 'ShopController');
+        Route::resource('shopcategory', 'ShopCategoryController');
+        Route::resource('geolocation', 'ShopLocationController');
+        Route::resource('shopowner', 'ShopOwnerController');
+
     });
 
 });

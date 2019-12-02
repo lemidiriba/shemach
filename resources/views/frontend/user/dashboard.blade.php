@@ -47,15 +47,7 @@
                             </div>
                         </div>
 
-                        <div class="card mb-4">
-                            <div class="card-header">Header</div>
-                            <div class="card-body">
-                                <h4 class="card-title">Info card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                            </div>
-                        </div>
-                        <!--card-->
+
                     </div>
                     <!--col-md-4-->
 
@@ -64,12 +56,11 @@
                         <div class="row col-sm-12">
                             <div class="col">
 
-                                <div class="mb-4">
+                                <div class="card mb-4">
 
-                                    <div class="row m-1">
-                                        <div class="col-sm-10 "></div>
+                                    <div class="card-body">
                                         <a type="button" data-toggle="modal" data-target="#modalLoginForm"
-                                            class="col-sm-2 btn btn-outline-success bg-success ">
+                                            class="btn bg-success float-right">
                                             <i class="fa fa-plus fa-inverse"></i>
                                         </a>
                                     </div>
@@ -87,22 +78,22 @@
                                                 </div>
                                                 <div class="modal-body mx-3">
                                                     <div class="is-valid">
-                                                        <form id="addShop" action="{{ route('admin.shop.store') }}"
-                                                            method="POST" enctype="multipart/form-data">
+                                                        <form id="addShop" action="{{ route('frontend.shop.store') }}"
+                                                            method="POST" role="form" enctype="multipart/form-data">
 
-                                                            @csrf
+                                                            {{ csrf_field() }}
                                                             <div class="form-group">
 
-                                                                <input name="shop_name" type="text" class="form-control"
-                                                                    id="exampleFormControlInput1"
-                                                                    placeholder="Shop Name">
+                                                                <input value="" name="shop_name" type="text"
+                                                                    class="form-control" id="exampleFormControlInput1"
+                                                                    placeholder="Shop Name" required>
                                                             </div>
 
 
                                                             <div class="form-group">
 
                                                                 <select name="shop_category" class="form-control"
-                                                                    id="exampleFormControlSelect1">
+                                                                    id="exampleFormControlSelect1" required>
                                                                     @foreach ($ShopCategories as $shopCategory)
                                                                     <option value="{{ $shopCategory ->id}}">
                                                                         {{ $shopCategory->category_name }}
@@ -114,14 +105,15 @@
 
                                                             <div class="form-group">
 
-                                                                <textarea name="Shop_description" type="text"
+                                                                <textarea name="Shop_description" type="text" required
                                                                     class="form-control" id="exampleFormControlInput1"
                                                                     placeholder="Shop Discription"></textarea>
                                                             </div>
                                                             <div class="form-group">
 
-                                                                <input name="shop_logo" type="file" class="form-control"
-                                                                    id="Shop Logo" placeholder="">
+                                                                <input type="file" name="image_file"
+                                                                    class="form-control" id="inputEmail3" placeholder=""
+                                                                    required>
                                                             </div>
 
 
@@ -133,7 +125,7 @@
                                                     <button type="submit" class="btn btn-default bg-">Create</button>
                                                 </div>
                                             </div>
-                                        </form>
+                                            </form>
                                         </div>
 
                                     </div>
@@ -148,37 +140,54 @@
                         </div>
 
                         @if (count($shops) != 0)
-                        @foreach ($shops as $shop)
                         <div class="row col-sm-12">
-                            <div class="col">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        {{ $shop->shop_name }}
-                                    </div>
-                                    <!--card-header-->
+                            @foreach ($shops as $shop)
 
-                                    <div class="card-body">
-                                        <div class="media">
-                                            <img src="{{ asset('shop/'.$shop->shop_logo) }}"
-                                                class="align-self-center mr-3" alt="">
-                                            <div class="media-body">
-                                                <h5 class="mt-0">Shop Description</h5>
-                                                <p> {{ $shop->shop_description }}</p>
+                            <div class="col-md-4">
 
-                                            </div>
+                                <!-- Profile Image -->
+                                <div class="card card-primary card-outline">
+                                    <div class="card-body box-profile">
+                                        <div class="text-center">
+                                            <img class="profile-user-img img-fluid img-circle"
+                                                src="{{ asset('shop_image/shop_logo/'.$shop->Shop_logo) }}"
+                                                alt="Shop Logo">
                                         </div>
-                                    </div>
-                                    <!--card-body-->
-                                </div>
-                                <!--card-->
-                            </div>
-                            <!--col-md-6-->
-                        </div>
-                        @endforeach
 
+                                        <h3 class="profile-username text-center">{{ $shop->shop_name }}</h3>
+
+                                        <p class="text-muted text-center">{{ $shop->created_by }}</p>
+
+                                        <ul class="list-group list-group-unbordered mb-3">
+                                            <li class="list-group-item">
+                                                <b>Total Product</b> <a class="float-right">1,322</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>Currunt</b> <a class="float-right">543</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>Moved Out</b> <a class="float-right">13,287</a>
+                                            </li>
+                                        </ul>
+
+                                        <a href="product/{{ $shop->id }}"
+                                            class="btn btn-primary btn-block"><b>View</b></a>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+
+                            </div>
+
+                            <!--col-md-6-->
+
+                            @endforeach
+                        </div>
                         @else
-                        <div class="alert alert-info" role="alert">
-                            Press the Green button to add Shop To the dashBoard
+                        <div class="alert alert-info alert-dismissible text-center">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h5 googl="true"><i class="icon fas fa-info"></i> Alert!</h5>
+                            Info alert preview. Press the green Button to Add Shop to the Dashboard.
                         </div>
                         @endif
 

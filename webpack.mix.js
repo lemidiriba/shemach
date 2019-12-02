@@ -10,6 +10,7 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.js('resources/js/frontend/app.js', 'public/js/vueapp.js');
 
 mix.setPublicPath('public')
     .setResourceRoot('../') // Turns assets paths in css relative to css file

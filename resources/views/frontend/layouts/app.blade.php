@@ -14,6 +14,7 @@
     <meta name="author" content="Bootstrap-ecommerce by Vosidiy">
     @yield('meta')
 
+    
     {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
     @stack('before-styles')
 
@@ -33,9 +34,6 @@
     <script src="{{ asset('/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
 
-    <!-- Font awesome 5 -->
-    <link href="{{ asset('/fonts/fontawesome/css/fontawesome-all.min.css') }}" type="text/css" rel="stylesheet">
-
     <!-- plugin: fancybox  -->
     <script src="{{ asset('/plugins/fancybox/fancybox.min.js') }}" type="text/javascript"></script>
     <link href="{{ asset('/plugins/fancybox/fancybox.min.css') }}" type="text/css" rel="stylesheet">
@@ -53,8 +51,6 @@
 
     <!-- custom javascript -->
     <script src="{{ asset('/js/script.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('/js/shop/shopdashboard.js') }}" type="text/javascript"></script>
-
 
     <script type="text/javascript">
         /// some script
@@ -73,11 +69,14 @@
 
     @include('frontend.includes.header')
     @include('includes.partials.messages')
+
     @yield('content')
     @include('frontend.includes.footer')
-
-
+    
     @include('includes.partials.ga')
 </body>
 
+
+
+<script src="{{ asset('/js/frontend.js') }}"></script>
 </html>
