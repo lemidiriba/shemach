@@ -4,10 +4,14 @@
 
 import _ from "lodash";
 import axios from "axios";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
+import swal from 'sweetalert';
+
+
 import $ from "jquery";
 import "popper.js"; // Required for BS4
 import "bootstrap";
+//import { within } from '@testing-library/dom/dist/@testing-library/dom.umd.js'
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -16,8 +20,9 @@ import "bootstrap";
  */
 
 window.$ = window.jQuery = $;
-window.Swal = Swal;
+window.Swal = require(Swal);
 window._ = _; // Lodash
+
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

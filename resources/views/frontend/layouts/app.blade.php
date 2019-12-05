@@ -14,7 +14,7 @@
     <meta name="author" content="Bootstrap-ecommerce by Vosidiy">
     @yield('meta')
 
-    
+
     {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
     @stack('before-styles')
 
@@ -25,7 +25,7 @@
     @stack('after-styles')
 
 
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/img/frontend/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/img/frontend/favicon.icon') }}">
 
     <!-- jQuery -->
     <script src="{{ asset('/js/jquery-2.0.0.min.js') }}" type="text/javascript"></script>
@@ -51,6 +51,12 @@
 
     <!-- custom javascript -->
     <script src="{{ asset('/js/script.js') }}" type="text/javascript"></script>
+    <!-- cdn files -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpsGH8gYnCGTRGo0Kid7qZCwUwjK9pel4&callback=initMap">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript">
         /// some script
@@ -70,13 +76,17 @@
     @include('frontend.includes.header')
     @include('includes.partials.messages')
 
+    @include('sweetalert::alert')
     @yield('content')
     @include('frontend.includes.footer')
-    
+
     @include('includes.partials.ga')
 </body>
 
 
 
 <script src="{{ asset('/js/frontend.js') }}"></script>
+<script src="{{ asset('/js/vendor.js') }}"></script>
+
+
 </html>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 @langrtl
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
 @else
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @endlangrtl
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,6 +47,7 @@
      * // Footer options
      * 1. '.footer-fixed'					- Fixed footer
 --}}
+
 <body class="app header-fixed sidebar-fixed aside-menu-off-canvas sidebar-lg-show">
     @include('backend.includes.header')
 
@@ -61,24 +63,31 @@
                 <div class="animated fadeIn">
                     <div class="content-header">
                         @yield('page-header')
-                    </div><!--content-header-->
+                    </div>
+                    <!--content-header-->
 
                     @include('includes.partials.messages')
                     @yield('content')
-                </div><!--animated-->
-            </div><!--container-fluid-->
-        </main><!--main-->
+                </div>
+                <!--animated-->
+            </div>
+            <!--container-fluid-->
+        </main>
+        <!--main-->
 
         @include('backend.includes.aside')
-    </div><!--app-body-->
+    </div>
+    <!--app-body-->
 
     @include('backend.includes.footer')
 
     <!-- Scripts -->
+
     @stack('before-scripts')
     {!! script(mix('js/manifest.js')) !!}
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
     @stack('after-scripts')
 </body>
+
 </html>

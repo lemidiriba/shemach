@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Frontend\Shop;
 
+use Alert;
 use App\Http\Controllers\Controller;
 use App\Models\Shop;
 use App\Repositories\Frontend\Shop\ShopRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+//use Illuminate\Support\Facades\Input;
 
 /**
  * ShopController class
@@ -56,12 +59,12 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-
+        //return $request->file('image_file');
         $this->validate($request, [
             'shop_name' => ['required', 'unique:shops,shop_name', 'string', 'min:3', 'max:100'],
             'shop_category' => 'required',
             'Shop_description' => ['required', 'string'],
-            'shop_logo' => ['image', 'mimes:jpeg,jpg,png,gif', 'max:20000'],
+            'image_file' => ['image', 'mimes:jpeg,jpg,png,gif', 'max:20000'],
         ]);
 
         if ($request->hasFile('image_file')) {
@@ -70,8 +73,9 @@ class ShopController extends Controller
             $filename = str_replace(' ', '', pathinfo($filenamewithext, PATHINFO_FILENAME));
             $extension = $request->file('image_file')->getClientOriginalExtension();
             $filenametostore = trim($filename, "\t\n\r\0\x0B") . '__' . time() . '.' . $extension;
-            $path = $request->file('image_file')->storeAs('public/shop_image/shop_logo', $filenametostore);
+            //$path = $request->file('image_file')->storeAs('public/shop_image/shop_logo', $filenametostore);
         }
+        //return $filenametostore;
         //reigistering shop name to data base
         $shop_data = new Shop();
         $shop_data->shop_name = $request->shop_name;
@@ -83,6 +87,16 @@ class ShopController extends Controller
 
         //Saving shop data
         if ($shop_data->save()) {
+            Alert::success('Shop Added Successfuly', 'Done!');
+
+            $request->file('image_file')->storeAs('public/shop_image/shop_logo', $filenametostore);
+            // Image::make($request->file('image_file'))
+            //     ->resize(600, 600)
+            //     ->save('shop_image/shop_logo/' . $filenametostore);
+
+            // // Image::make($request->file('image_file'))->resize(
+            //     600, 600
+            // )->save(public_path('shop_image/shop_logo/' . $filenametostore));
             return redirect()->route('frontend.user.dashboard');
         }
 

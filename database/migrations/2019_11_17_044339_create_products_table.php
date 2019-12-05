@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('product_name');
+            $table->string('product_amount');
             $table->double('price');
             $table->unsignedBigInteger('product_detail_id');
             $table->unsignedBigInteger('product_type_id');
@@ -24,13 +25,13 @@ class CreateProductsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('products', function (Blueprint $table) {
-            $table->foreign('product_detail_id')->references('id')->on('product_details');
-        });
+        // Schema::table('products', function (Blueprint $table) {
+        //     $table->foreign('product_detail_id')->references('id')->on('product_details');
+        // });
 
-        Schema::table('products', function (Blueprint $table) {
-            $table->foreign('product_type_id')->references('id')->on('product_types');
-        });
+        // Schema::table('products', function (Blueprint $table) {
+        //     $table->foreign('product_type_id')->references('id')->on('product_types');
+        // });
 
         Schema::table('products', function (Blueprint $table) {
             $table->foreign('shop_id')->references('id')->on('shops');

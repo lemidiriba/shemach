@@ -41,19 +41,4 @@ class DashboardController extends Controller
             ->with(['shops' => $shops, 'ShopCategories' => $shopCategories]);
     }
 
-    /**
-     * Product function
-     *
-     * @param Int $id
-     * @return void
-     */
-    public function product($shop_id)
-    {
-        $product_list = $this->productRepository->getByShop($shop_id);
-        $shop_name = $this->shopRepository->getByColumn($shop_id, 'id', ['shop_name']);
-
-        return view('frontend.user.shoplist')->with([
-            'product_lists' => $product_list,
-            'shop_name' => $shop_name]);
-    }
 }

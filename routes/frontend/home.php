@@ -24,7 +24,6 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
     Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         // User Dashboard Specific
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('product/{id}', [DashboardController::class, 'product'])->name('product');
 
         // User Account Specific
         Route::get('account', [AccountController::class, 'index'])->name('account');
@@ -43,6 +42,15 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::resource('shopcategory', 'ShopCategoryController');
         Route::resource('geolocation', 'ShopLocationController');
         Route::resource('shopowner', 'ShopOwnerController');
+
+    });
+
+});
+
+Route::group(['middleware' => ['auth', 'password_expires']], function () {
+    Route::group(['namespace' => 'Product'], function () {
+
+        Route::resource('product', 'ProductController');
 
     });
 

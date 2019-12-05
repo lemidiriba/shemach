@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Product;
+use App\Models\ShopCatagory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -18,5 +19,10 @@ class Shop extends Model
     public function product()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function shopcategory()
+    {
+        return $this->belongsTo(ShopCatagory::class);
     }
 }

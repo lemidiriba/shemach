@@ -34,7 +34,7 @@
 
                                 <p class="card-text">
 
-                                    <a href="{{ route('frontend.user.account')}}" class="btn btn-info btn-sm mb-1">
+                                    <a href="{{ route('frontend.user.account')}}" class="btn btn-warning btn-sm mb-1">
                                         <i class="fas fa-user-circle"></i> @lang('navs.frontend.user.account')
                                     </a>
 
@@ -60,8 +60,8 @@
 
                                     <div class="card-body">
                                         <a type="button" data-toggle="modal" data-target="#modalLoginForm"
-                                            class="btn bg-success float-right">
-                                            <i class="fa fa-plus fa-inverse"></i>
+                                            class="btn bg-default float-right">
+                                            <i class="fa fa-plus-circle fa-2x"></i>
                                         </a>
                                     </div>
                                     <!--card-header-->
@@ -85,14 +85,16 @@
                                                             <div class="form-group">
 
                                                                 <input value="" name="shop_name" type="text"
-                                                                    class="form-control" id="exampleFormControlInput1"
-                                                                    placeholder="Shop Name" required>
+                                                                    class="form-control md-form"
+                                                                    id="exampleFormControlInput1"
+                                                                    placeholder="Shop Name" maxlength="17" required>
                                                             </div>
 
 
                                                             <div class="form-group">
 
-                                                                <select name="shop_category" class="form-control"
+                                                                <select name="shop_category"
+                                                                    class="form-control md-form"
                                                                     id="exampleFormControlSelect1" required>
                                                                     @foreach ($ShopCategories as $shopCategory)
                                                                     <option value="{{ $shopCategory ->id}}">
@@ -105,15 +107,16 @@
 
                                                             <div class="form-group">
 
-                                                                <textarea name="Shop_description" type="text" required
-                                                                    class="form-control" id="exampleFormControlInput1"
-                                                                    placeholder="Shop Discription"></textarea>
+                                                                <textarea name="Shop_description" type="text"
+                                                                    class="form-control md-form"
+                                                                    id="exampleFormControlInput1"
+                                                                    placeholder="Shop Discription" required></textarea>
                                                             </div>
                                                             <div class="form-group">
 
                                                                 <input type="file" name="image_file"
-                                                                    class="form-control" id="inputEmail3" placeholder=""
-                                                                    required>
+                                                                    class="form-control md-form" id="inputEmail3"
+                                                                    placeholder="" required>
                                                             </div>
 
 
@@ -122,7 +125,7 @@
 
                                                 </div>
                                                 <div class="modal-footer d-flex justify-content-center bg-warning">
-                                                    <button type="submit" class="btn btn-default bg-">Create</button>
+                                                    <button type="submit" class="btn btn-warning bg-">Create</button>
                                                 </div>
                                             </div>
                                             </form>
@@ -143,20 +146,22 @@
                         <div class="row col-sm-12">
                             @foreach ($shops as $shop)
 
-                            <div class="col-md-4">
+                            <div class="col-md-5 mb-3">
 
                                 <!-- Profile Image -->
                                 <div class="card card-primary card-outline">
                                     <div class="card-body box-profile">
-                                        <div class="text-center">
-                                            <img class="profile-user-img img-fluid img-circle"
+                                        <!--<div class="text-center">
+                                            <img class="profile-user-img img-fluid img-circle w-50"
                                                 src="{{ asset('shop_image/shop_logo/'.$shop->Shop_logo) }}"
                                                 alt="Shop Logo">
+                                        </div>-->
+                                        <div class="embed-responsive embed-responsive-4by3">
+                                            <img alt="Card image cap" class="card-img-top embed-responsive-item"
+                                                src="{{ asset('shop_image/shop_logo/'.$shop->Shop_logo) }}" />
                                         </div>
+                                        <h3 class="profile-username text-center">{{ ucwords($shop->shop_name) }}</h3>
 
-                                        <h3 class="profile-username text-center">{{ $shop->shop_name }}</h3>
-
-                                        <p class="text-muted text-center">{{ $shop->created_by }}</p>
 
                                         <ul class="list-group list-group-unbordered mb-3">
                                             <li class="list-group-item">
@@ -170,8 +175,8 @@
                                             </li>
                                         </ul>
 
-                                        <a href="product/{{ $shop->id }}"
-                                            class="btn btn-primary btn-block"><b>View</b></a>
+                                        <a href="{{ route('frontend.product.index').'/'.$shop->id }}"
+                                            class="btn btn btn-warning btn-block"><b>View</b></a>
                                     </div>
                                     <!-- /.card-body -->
                                 </div>

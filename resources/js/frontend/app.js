@@ -6,10 +6,15 @@
 
 require('../bootstrap');
 
+import swal from 'sweetalert';
+window.swal = require(swal);
+
+
 
 window.Vue = require('vue');
 
 import VueRouter from "vue-router";
+
 Vue.use(VueRouter);
 
 
