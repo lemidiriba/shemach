@@ -106,12 +106,12 @@ class ProductController extends Controller
     public function show($shop_id)
     {
         $product_list = $this->productRepository->getByShop($shop_id);
-        $shop_name = $this->shopRepository->getByColumn($shop_id, 'id', ['shop_name', 'id']);
+        $shop_name = $this->shopRepository->getByColumn($shop_id, 'id');
 
         return view('frontend.user.shopproductlist')
             ->with([
                 'product_lists' => $product_list,
-                'shop_name' => $shop_name,
+                'shop' => $shop_name,
             ]);
 
     }

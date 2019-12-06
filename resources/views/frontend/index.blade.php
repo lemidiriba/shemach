@@ -9,14 +9,15 @@
     #map {
         overflow: hidden;
         padding-bottom: 56.25%;
-        position: relative;
-        width: 100%;
+        height: 0;
 
     }
 
     #map iframe {
         left: 0;
         top: 0;
+        height: 50%;
+        width: 100%;
 
         position: absolute;
     }
@@ -24,7 +25,7 @@
 
 <section class="section-main bg padding-y-sm">
     <div class="container">
-        <div class="card">
+        <div class="card pb-4">
             <div class="card-body">
                 <div class="row row-sm">
                     <aside class="col-md-3">
@@ -42,6 +43,7 @@
                         </ul>
 
                     </aside>
+
                     <!-- col.// -->
                     <div id="map" class="col-md-6">
                         <iframe src="https://maps.google.com/maps?q=Madryt&t=&z=13&ie=UTF8&iwloc=&output=embed"
@@ -55,8 +57,9 @@
                         <div style="height:280px;">
                             @foreach ($shop_datas as $shop_data)
 
-                            <figure class="itemside has-bg border-bottom m-1" style="height: 33%;">
-                                <img class="img-bg" src="{{ asset('shop_image/shop_logo/'.$shop_data->Shop_logo) }} ">
+                            <figure class="itemside has-bg border-bottom m-1 embed-responsive embed-responsive-4by3"
+                                style="height: 33%;">
+                                <img class="img-bg " src="{{ asset('shop_image/shop_logo/'.$shop_data->Shop_logo) }} ">
                                 <figcaption class="p-2">
                                     <h6 class="title">{{ ucwords($shop_data->shop_name) }} </h6>
                                     <a href="#">Shop link</a>
@@ -237,7 +240,8 @@
 
                         <div class="price-wrap">
                             <span class="price-new">{{ $product_data->price }}</span>
-                            <del class="price-old">{{ (int)(($product_data->price) +($product_data->price * (8/100))) }}</del>
+                            <del
+                                class="price-old">{{ (int)(($product_data->price) +($product_data->price * (8/100))) }}</del>
                         </div>
                         <!-- price-wrap.// -->
 
@@ -341,11 +345,14 @@
     //new map
     var map = new google.maps.Map(document.getElementById('map'), options);
 
+
     //variable marker
     var marker = new google.maps.Marker({
         position:{lat:8.9806 , lng:38.7578},
         map:map
     });
+
+    //geting data from specific location
 
     //add info to the marker
     contentDetail = "<h2>Starting Point</h2>";
@@ -357,6 +364,8 @@
     marker.addListiner('click', function () {
         infowindow.open(map, marker);
      });
+
+
 
  }
 

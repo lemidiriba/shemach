@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\Shop\ShopController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\DashboardController;
 use App\Http\Controllers\Frontend\User\ProfileController;
@@ -43,6 +44,10 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::resource('geolocation', 'ShopLocationController');
         Route::resource('shopowner', 'ShopOwnerController');
 
+        //added route to resource Controller
+        /////////////////////////////////////////////////
+        //add to ShopController
+        Route::post('shop/location', [ShopController::class, 'addLocation'])->name('addLocation');
     });
 
 });

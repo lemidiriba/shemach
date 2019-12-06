@@ -5,10 +5,56 @@
 
 @section('content')
 
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Hello, {{ $logged_in_user->name }}</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+            featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+            <button class="btn btn-warning btn-lg" href="#" role="button">Edit Shop</button>
+            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#exampleModal">
+
+                <span role="button">Add Location</span>
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" id="exampleModalLabel">
+                                {{ $shop->shop_name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addLocation" action="" method="POST" role="form">
+                                <div class="input-group">
+                                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                                    <input name="lng" type="text" value="" placeholder="Longtude"
+                                        class="form-control ml-1">
+                                    <input name="lat" type="text" value="" placeholder="Latitude" class="form-control">
+                                    <div class="input-group-append">
+                                        <button id="add_location" class="btn btn-sm btn-warning"
+                                            type="submit">Add</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </p>
+    </div>
+</div>
+
 <div class="card">
 
     <div class="card-header text-center" googl="true">
-        <h3 class="card-title"> {{  ucwords($shop_name->shop_name) }} Product List</h3>
+        <h3 class="card-title"> {{  ucwords($shop->shop_name) }} Product List</h3>
 
     </div>
     <!-- /.card-header -->
@@ -38,7 +84,7 @@
                             <div class="is-valid">
                                 <form id="addShop" action="" method="POST" role="form" enctype="multipart/form-data">
                                     <!--hidden filed -->
-                                    <input name="shop" type="hidden" value="{{ $shop_name->id }}">
+                                    <input name="shop" type="hidden" value="{{ $shop->id }}">
 
 
                                     {{ csrf_field() }}
@@ -215,18 +261,67 @@
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
         });
+        ////////////////////////////////////////////////////////////
+////////////////////Shop Location////////////////////////////
+////////////////////////////////////////////////////////////
+$('#add_location').click(function (e) {
 
+    e.preventDefault();
+
+    console.log('add location clicked');
+
+    let form = $('#addLocation')[0];
+    let locationFormData = new FormData(form);
+    console.log(locationFormData);
+    $.ajax({
+        type: "POST",
+        url: 'http://shemach.dev/shop/location',
+        data: locationFormData,
+        cache: false,
+        contentType: false,
+        processData: false
+    }).done(
+        function (response) {
+        console.log(response);
+        $('#addshopproduct').modal('hide');
+
+        swal({
+            icon: 'success',
+            title: response.message,
+            toast: true,
+            button: false,
+            timer: 2000,
+            timerProgressBar: true,
+        })
+    }
+    ).fail(
+        function(response) {
+            console.log(response.responseJSON);
+            //$('#addshopproduct').modal('hide');
+                swal({
+                    icon: 'error',
+                    title: response.responseJSON.message,
+                })
+            }
+        );
+    });
+
+
+
+        ////////////////////////////////////////////////////////////
+////////////////////Shop Product////////////////////////////
+////////////////////////////////////////////////////////////
         //saving product in shop
         $("#add_product").click(function(e){
             e.preventDefault();
             let form = $('#addShop')[0];
-            let formData = new FormData(form);
+            let addProductFormData = new FormData(form);
 
             $.ajax({
                 type: "POST",
                 enctype: 'multipart/form-data',
                 url:'http://shemach.dev/product',
-                data: formData,
+                data: addProductFormData,
                 cache: false,
                 contentType: false,
                 processData: false
@@ -239,7 +334,7 @@
                             title: 'Product Adderd successfully',
                             toast: true,
                             position: 'top-end',
-                            showConfirmButton: false,
+                            button: false,
                             timer: 3000,
                             timerProgressBar: true,
                             onOpen: (toast) => {
@@ -256,6 +351,7 @@
 
             ).fail(
                 function (response) {
+
                     Swal({
                         icon: 'error',
                         title: 'Oops...',
@@ -272,13 +368,13 @@
         $("#edit_product").click(function (e) {
             e.preventDefault();
             let form = $('#addShop')[0];
-            let formData = new FormData(form);
+            let updateProductFormData = new FormData(form);
 
             $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
             url:'http://shemach.dev/product/',
-            data: formData,
+            data: updateProductFormData,
             cache: false,
             contentType: false,
             processData: false
@@ -296,7 +392,7 @@
             }
             );
         });
-
+        //deleteing product in shop
         $("#delete_product").click(function (e) {
 
         });

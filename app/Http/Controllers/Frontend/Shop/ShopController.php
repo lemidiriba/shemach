@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend\Shop;
 use Alert;
 use App\Http\Controllers\Controller;
 use App\Models\Shop;
+use App\Models\ShopLocation;
+use App\Repositories\Frontend\Shop\ShopLocationRepository;
 use App\Repositories\Frontend\Shop\ShopRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +19,9 @@ use Illuminate\Support\Facades\Auth;
 class ShopController extends Controller
 {
     protected $shopRepository;
+    protected $shopLocationRepository;
+    //modal
+    protected $shopLocation;
     protected $shopModel;
 
     /**
@@ -24,10 +29,11 @@ class ShopController extends Controller
      *
      * @param ShopRepository $shopRepository
      */
-    public function __construct(ShopRepository $shopRepository)
+    public function __construct(ShopRepository $shopRepository, ShopLocationRepository $shopLocationRepository)
     {
         $this->middleware('auth');
         $this->shopRepository = $shopRepository;
+        $this->shopLocationRepository = $shopLocationRepository;
     }
 
     /**
@@ -90,13 +96,7 @@ class ShopController extends Controller
             Alert::success('Shop Added Successfuly', 'Done!');
 
             $request->file('image_file')->storeAs('public/shop_image/shop_logo', $filenametostore);
-            // Image::make($request->file('image_file'))
-            //     ->resize(600, 600)
-            //     ->save('shop_image/shop_logo/' . $filenametostore);
 
-            // // Image::make($request->file('image_file'))->resize(
-            //     600, 600
-            // )->save(public_path('shop_image/shop_logo/' . $filenametostore));
             return redirect()->route('frontend.user.dashboard');
         }
 
@@ -145,6 +145,46 @@ class ShopController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * AddLocation function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function addLocation(Request $request)
+    {
+
+        $this->validate($request, [
+            'lat' => ['required', 'numeric'],
+            'lng' => ['required', 'numeric'],
+            'shop_id' => ['required', 'integer'],
+
+        ]);
+        //check if location exist
+        //then add location or update location
+        $shopExist = $this->shopLocationRepository->where('Shop_id', $request->shop_id)->get();
+
+        //return '' . is_null($shopExist = ShopLocation::find($request->shop_id));
+        if (count($shopExist) == 0) {
+            $shopData = new ShopLocation();
+            //shop locaion exist update location
+            $shopData->shop_id = $request->shop_id;
+            $shopData->longitude = $request->lng;
+            $shopData->latitude = $request->lat;
+            $shopData->save();
+            return ['message' => 'Location Added'];
+        } else {
+            //no shop location add location
+            $shopExist1 = ShopLocation::find($shopExist[0]->id);
+            $shopExist1->longitude = $request->lng;
+            $shopExist1->latitude = $request->lat;
+            $shopExist1->update();
+            return ['message' => 'Location Updated'];
+
+        }
+        //return $request;
     }
 
 }

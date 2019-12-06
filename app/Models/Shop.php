@@ -12,17 +12,25 @@ use Illuminate\Database\Eloquent\Model;
 class Shop extends Model
 {
     /**
-     * Product function
-     *
      * @return void
      */
     public function product()
     {
         return $this->hasMany(Product::class);
     }
-
+    /**
+     * @return mixed
+     */
     public function shopcategory()
     {
         return $this->belongsTo(ShopCatagory::class);
+    }
+    /**
+     * @return mixed
+     */
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

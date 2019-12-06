@@ -3,6 +3,7 @@
 @section('title', app_name() . ' | ' . __('navs.frontend.dashboard') )
 
 @section('content')
+
 <div class="row mb-4">
     <div class="col">
         <div class="card">
@@ -175,9 +176,21 @@
                                             </li>
                                         </ul>
 
-                                        <a href="{{ route('frontend.product.index').'/'.$shop->id }}"
-                                            class="btn btn btn-warning btn-block"><b>View</b></a>
+
+                                        <a href="{{ route('frontend.product.index').'/'.$shop->id }}" role="button"
+                                            class="btn btn btn-warning btn-block "><b>View</b>
+                                        </a>
+
+
+
+
+
+
                                     </div>
+
+
+
+
                                     <!-- /.card-body -->
                                 </div>
                                 <!-- /.card -->
@@ -208,4 +221,10 @@
         </div><!-- card -->
     </div><!-- row -->
 </div><!-- row -->
+
+<script>
+
+
+
+</script>
 @endsection
