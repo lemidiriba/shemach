@@ -46,8 +46,7 @@
 
                     <!-- col.// -->
                     <div id="map" class="col-md-6">
-                        <iframe src="https://maps.google.com/maps?q=Madryt&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                            frameborder="0" style="border:0; height:50%;" allowfullscreen></iframe>
+                        <iframe src="" frameborder="0" style="border:0; height:50%;" allowfullscreen></iframe>
                     </div>
                     <!-- col.// -->
                     <aside class="col-md-3">
@@ -335,39 +334,59 @@
 <!-- ========================= SECTION SUBSCRIBE END.//========================= -->
 
 <script>
+
+    var map;
+
+    $.ajaxSetup({
+
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+    method:"GET",
+    url:'http://shemach.dev/shop/location/all',
+    cache: true,
+
+
+    }).done(
+        function (e) {
+            console.log('success');
+            console.log(e);
+            for (let i = 0; i < e.length; i++)
+            {
+
+                const lat = parseFloat(e[i].longitude)
+                const lng =parseFloat(e[i].latitude)
+                addMarker(lat,lng); // var infoWindow=new
+
+            }
+        }
+    );
+
     function initMap() {
+        console.log('map inti statrt')
+        //map options
+        var options = {
+            zoom:12,
+            center: {lat:8.9806 , lng:38.7578}
+        }
+        //new map
+        map = new google.maps.Map(document.getElementById('map'),options);
 
-    //map options
-    var options = {
-        zoom:5,
-        center: {lat:8.9806 , lng:38.7578}
     }
-    //new map
-    var map = new google.maps.Map(document.getElementById('map'), options);
 
+    function addMarker(lat,lng) {
+        console.log('here')
+        const latLng = {lat:lat,lng:lng}
 
-    //variable marker
-    var marker = new google.maps.Marker({
-        position:{lat:8.9806 , lng:38.7578},
-        map:map
-    });
+        var marker = new google.maps.Marker({
+            position:latLng,
+        });
+        marker.setMap(map);
 
-    //geting data from specific location
-
-    //add info to the marker
-    contentDetail = "<h2>Starting Point</h2>";
-
-    var infowindow = new google.maps.infoWindow({
-        content: contentDetail,
-    });
-
-    marker.addListiner('click', function () {
-        infowindow.open(map, marker);
-     });
-
-
-
- }
+    }
 
 </script>
 

@@ -14,18 +14,18 @@ use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Input;
 
 /**
- * ShopController class
+ * ShopController class.
  */
 class ShopController extends Controller
 {
-    protected $shopRepository;
-    protected $shopLocationRepository;
+    protected $_shopRepository;
+    protected $_shopLocationRepository;
     //modal
-    protected $shopLocation;
-    protected $shopModel;
+    protected $_shopLocation;
+    protected $_shopModel;
 
     /**
-     * Construct function
+     * Construct function.
      *
      * @param ShopRepository $shopRepository
      */
@@ -44,6 +44,7 @@ class ShopController extends Controller
     public function index()
     {
         $shopList = $this->shopRepository->where('user_id', Auth::id());
+
         return view('backend.dashboard')->with(['myShops', $shopList]);
     }
 
@@ -53,14 +54,13 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
-    }
+    { }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -99,68 +99,62 @@ class ShopController extends Controller
 
             return redirect()->route('frontend.user.dashboard');
         }
-
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
+    { }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
-    }
+    { }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
-    }
+    { }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    { 
+        return $id;
     }
 
     /**
-     * AddLocation function
+     * AddLocation function.
      *
      * @param Request $request
-     * @return void
      */
     public function addLocation(Request $request)
     {
-
         $this->validate($request, [
             'lat' => ['required', 'numeric'],
             'lng' => ['required', 'numeric'],
             'shop_id' => ['required', 'integer'],
-
         ]);
         //check if location exist
         //then add location or update location
@@ -174,6 +168,7 @@ class ShopController extends Controller
             $shopData->longitude = $request->lng;
             $shopData->latitude = $request->lat;
             $shopData->save();
+
             return ['message' => 'Location Added'];
         } else {
             //no shop location add location
@@ -181,10 +176,9 @@ class ShopController extends Controller
             $shopExist1->longitude = $request->lng;
             $shopExist1->latitude = $request->lat;
             $shopExist1->update();
-            return ['message' => 'Location Updated'];
 
+            return ['message' => 'Location Updated'];
         }
         //return $request;
     }
-
 }

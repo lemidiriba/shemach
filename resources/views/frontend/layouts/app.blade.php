@@ -56,7 +56,7 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpsGH8gYnCGTRGo0Kid7qZCwUwjK9pel4&callback=initMap">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ asset('/js/sweetalert.min.js') }}"></script>
 
     <script type="text/javascript">
         /// some script

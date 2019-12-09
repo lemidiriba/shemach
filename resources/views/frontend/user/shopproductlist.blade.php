@@ -29,13 +29,13 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body is-valid">
                             <form id="addLocation" action="" method="POST" role="form">
                                 <div class="input-group">
                                     <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                                    <input name="lng" type="text" value="" placeholder="Longtude"
-                                        class="form-control ml-1">
-                                    <input name="lat" type="text" value="" placeholder="Latitude" class="form-control">
+                                    <input name="lng" type="number" min="o" value="" placeholder="Longtude"
+                                        class="form-control ml-1" required >
+                                    <input name="lat" type="number" min="0" value="" placeholder="Latitude" class="form-control" required>
                                     <div class="input-group-append">
                                         <button id="add_location" class="btn btn-sm btn-warning"
                                             type="submit">Add</button>
@@ -144,6 +144,8 @@
 
             </div>
             <!-- model -->
+
+            <!--table container -->
             @if (count($product_lists) != 0)
             <div class="container">
                 <div class="row ">
@@ -197,17 +199,17 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="mt-5 row align-content-center">
-                                            <button type="button" class="col-12 btn btn-sm btn-default"
-                                                aria-label="Left Align">
+                                            <button value="{{ $product_list->id }}" type="button" class="col-12 btn btn-sm btn-default product_detail"
+                                                aria-label="Left Align" >
                                                 <i class="fa fa-info-circle fa-1x"></i>
                                             </button>
 
-                                            <button type="button" class="col-12 btn-sm btn btn-default"
+                                            <button  type="button" class="col-12 btn-sm btn btn-default update_product"
                                                 aria-label="Left Align">
                                                 <i class="fa fa-edit fa-1x"></i>
                                             </button>
 
-                                            <button type="button" class="col-12 btn btn-sm btn-default"
+                                            <button value="{{ $product_list->id }}" type="button" class="col-12 btn btn-sm btn-default delete_product"
                                                 aria-label="Left Align">
                                                 <i class="fa fa-trash fa-1x"></i>
                                             </button>
@@ -242,12 +244,40 @@
             </div>
 
             @else
+            <!-- table ends -->
             <div class="alert alert-info alert-dismissible text-center">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h5 googl="true"><i class="icon fas fa-info"></i> Alert!</h5>
                 Info alert preview. Press the green Button to Add Product to the Shop.
             </div>
             @endif
+
+            <!-- data model for info btn -->
+            <div class="modal fade" id="product_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Product Detail</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group list-group-flush">
+                            <li id="name" class="list-group-item"></li>
+                            <li id="amount" class="list-group-item"></li>
+                            <li id="price" class="list-group-item"></li>
+                            <li id="product_detail" class="list-group-item"></li>
+                            <li id="product_type" class="list-group-item"></li>
+                            <li id="vender_detail" class="list-group-item"></li>
+                            <li id="shop_name" class="list-group-item">{{ $shop->shop_name }}</li>
+                            <li id="" class="list-group-item"></li>
+                          </ul>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
 
         </div>
     </div>
@@ -257,145 +287,224 @@
     <script>
         $.ajaxSetup({
 
-        headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
-        ////////////////////////////////////////////////////////////
-////////////////////Shop Location////////////////////////////
-////////////////////////////////////////////////////////////
-$('#add_location').click(function (e) {
 
-    e.preventDefault();
+    ////////////////////////////////////////////////////////////
+    ////////////////////Shop item Delete////////////////////////////
+    ////////////////////////////////////////////////////////////
 
-    console.log('add location clicked');
+    $('.delete_product').click(function (e) {
+        e.preventDefault();
 
-    let form = $('#addLocation')[0];
-    let locationFormData = new FormData(form);
-    console.log(locationFormData);
-    $.ajax({
-        type: "POST",
-        url: 'http://shemach.dev/shop/location',
-        data: locationFormData,
-        cache: false,
-        contentType: false,
-        processData: false
-    }).done(
-        function (response) {
-        console.log(response);
-        $('#addshopproduct').modal('hide');
+        console.log('Delete pressed');
+        console.log($(this).attr('value'));
+        let productid = $(this).val();
 
         swal({
-            icon: 'success',
-            title: response.message,
-            toast: true,
-            button: false,
-            timer: 2000,
-            timerProgressBar: true,
-        })
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+
+               deleteProduct(productid);
+
+
+            }
+        });
+
+
+
+
+
+    });
+
+    function deleteProduct(productID){
+        console.log(productID);
+        $.ajax({
+                    url: "http://shemach.dev/product/delete/"+productID,
+                    type: 'DELETE',
+                    data: {
+                        "productID": productID,
+                    },
+                }).done(
+                    function(result) {
+                        console.log(result);
+                        window.location.reload();
+                            swal("Poof! Your file has been deleted!", {
+                                icon: "success",
+                            });
+
+                    }
+                ).fail(
+                    function (response) {
+                        console.log(response);
+                        //window.open(response, '_blank')
+                        swal({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        })
+                    }
+                )
     }
-    ).fail(
-        function(response) {
-            console.log(response.responseJSON);
-            //$('#addshopproduct').modal('hide');
-                swal({
-                    icon: 'error',
-                    title: response.responseJSON.message,
-                })
+
+
+
+    ////////////////////////////////////////////////////////////
+    ////////////////////Shop item Update////////////////////////////
+    ////////////////////////////////////////////////////////////
+
+    //updating  product in a shop
+    $(".product_detail").click(function (e) {
+
+        let product_id = $(this).attr('value');
+        console.log(product_id);
+
+        $.ajax({
+            type: "GET",
+            url:'http://shemach.dev/product/detail/'+ product_id,
+            data:{
+                'product_id': product_id
+            }
+
+        }).done(
+            function (response) {
+                console.log('here');
+                console.log(response);
+
+                //alert( "second success" );
+                $('#name').html(response.product_name);
+                $('#amount').html(response.product_amount);
+                $('#price').html(response.price);
+                $('#product_detail').html(response.product_detail_id);
+                $('#product_type').html(response.product_type_id);
+                $('#vender_detail').html(response.product_vender_id);
+
+
+                $('#product_info').modal('show');
+            }
+        ).fail(
+            function (response) {
+                console.log(response);
             }
         );
     });
 
 
 
-        ////////////////////////////////////////////////////////////
-////////////////////Shop Product////////////////////////////
-////////////////////////////////////////////////////////////
-        //saving product in shop
-        $("#add_product").click(function(e){
-            e.preventDefault();
-            let form = $('#addShop')[0];
-            let addProductFormData = new FormData(form);
+    ////////////////////////////////////////////////////////////
+    ////////////////////Shop Product////////////////////////////
+    ////////////////////////////////////////////////////////////
+    //saving product in shop
+            $("#add_product").click(function(e){
+                e.preventDefault();
+                let form = $('#addShop')[0];
+                let addProductFormData = new FormData(form);
 
-            $.ajax({
-                type: "POST",
-                enctype: 'multipart/form-data',
-                url:'http://shemach.dev/product',
-                data: addProductFormData,
-                cache: false,
-                contentType: false,
-                processData: false
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url:'http://shemach.dev/product',
+                    data: addProductFormData,
+                    cache: false,
+                    contentType: false,
+                    processData: false
 
-            }).done(
-                function (response) {
-                    $('#addshopproduct').modal('hide');
+                }).done(
+                    function (response) {
+                        $('#addshopproduct').modal('hide');
+                            swal({
+                                icon: 'success',
+                                title: 'Product Adderd successfully',
+                                toast: true,
+                                position: 'top-end',
+                                button: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                onOpen: (toast) => {
+                                toast.addEventListener('mouseenter', swal.stopTimer)
+                                toast.addEventListener('mouseleave', swal.resumeTimer)
+                                }
+                            })
+
+                            console.log(response);
+                            //alert( "second success" );
+                            window.location.reload();
+
+                    }
+
+                ).fail(
+                    function (response) {
+
                         swal({
-                            icon: 'success',
-                            title: 'Product Adderd successfully',
-                            toast: true,
-                            position: 'top-end',
-                            button: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            onOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                         })
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
 
+                        })
                         console.log(response);
-                        //alert( "second success" );
-                        window.location.reload();
+                    }
+                );
 
-                }
+            });
 
-            ).fail(
-                function (response) {
 
-                    Swal({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
+            //deleteing product in shop
 
-                    })
-                    console.log(response);
-                }
-            );
 
-        });
 
-        //updating  product in a shop
-        $("#edit_product").click(function (e) {
-            e.preventDefault();
-            let form = $('#addShop')[0];
-            let updateProductFormData = new FormData(form);
+             ////////////////////////////////////////////////////////////
+    ////////////////////Shop Location////////////////////////////
+    ////////////////////////////////////////////////////////////
+    $('#add_location').click(function (e) {
 
-            $.ajax({
+        e.preventDefault();
+
+        console.log('add location clicked');
+
+        let form = $('#addLocation')[0];
+        let locationFormData = new FormData(form);
+        console.log(locationFormData);
+        $.ajax({
             type: "POST",
-            enctype: 'multipart/form-data',
-            url:'http://shemach.dev/product/',
-            data: updateProductFormData,
+            url: 'http://shemach.dev/shop/location',
+            data: locationFormData,
             cache: false,
             contentType: false,
             processData: false
-
-            }).done(
+        }).done(
             function (response) {
             console.log(response);
-            //alert( "second success" );
-            $('#modalLoginForm').modal('hide');
-            }
+            $('#exampleModal').modal('hide');
 
-            ).fail(
-            function (response) {
-            console.log(response);
-            }
-            );
-        });
-        //deleteing product in shop
-        $("#delete_product").click(function (e) {
 
-        });
+            swal({
+                icon: 'success',
+                title: response.message,
+                toast: true,
+                button: false,
+                timer: 2000,
+                timerProgressBar: true,
+            })
+        }
+        ).fail(
+            function(response) {
+                console.log(response.responseJSON);
+                //$('#exampleModal').modal('hide');
+                    swal({
+                        icon: 'error',
+                        title: response.responseJSON.message,
+                    })
+            }
+        );
+    });
     </script>
-</div>
+    </div>
 @endsection

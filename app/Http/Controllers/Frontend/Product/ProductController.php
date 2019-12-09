@@ -28,9 +28,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-
-    }
+    { }
 
     /**
      * Show the form for creating a new resource.
@@ -94,7 +92,6 @@ class ProductController extends Controller
 
             return ['message' => 'Product added succefully'];
         }
-
     }
 
     /**
@@ -105,6 +102,7 @@ class ProductController extends Controller
      */
     public function show($shop_id)
     {
+        //return 'show';
         $product_list = $this->productRepository->getByShop($shop_id);
         $shop_name = $this->shopRepository->getByColumn($shop_id, 'id');
 
@@ -113,7 +111,6 @@ class ProductController extends Controller
                 'product_lists' => $product_list,
                 'shop' => $shop_name,
             ]);
-
     }
 
     /**
@@ -124,7 +121,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        return 'edit';
     }
 
     /**
@@ -136,7 +133,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return 'update';
     }
 
     /**
@@ -147,6 +144,21 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //return 'destroy '.$id;
+        $product = Product::find($id);
+        $product->delete();
+        return response(['message' => 'Product deleted', 'status' => 'success']);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Int $id
+     * @return void
+     */
+    public function detail($id)
+    {
+        $product = $this->productRepository->getById($id);
+        return $product;
     }
 }
