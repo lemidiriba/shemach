@@ -369,7 +369,7 @@
         console.log('map inti statrt')
         //map options
         var options = {
-            zoom:12,
+            zoom:10,
             center: {lat:8.9806 , lng:38.7578}
         }
         //new map

@@ -48,7 +48,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request;
+        //return 'store';
 
         $this->validate($request, [
             'product_name' => ['required', 'string', 'max:191'],
@@ -150,8 +150,10 @@ class ProductController extends Controller
         return response(['message' => 'Product deleted', 'status' => 'success']);
     }
 
+
+
     /**
-     * Undocumented function
+     * Detail  function
      *
      * @param Int $id
      * @return void

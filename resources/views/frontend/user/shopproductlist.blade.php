@@ -90,13 +90,13 @@
                                     {{ csrf_field() }}
                                     <div class="form-group">
 
-                                        <input id="product_name" name="product_name" type="text"
+                                        <input name="product_name" type="text"
                                             class="form-control md-form" id="exampleFormControlInput1"
                                             placeholder="Product Name" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <select name="product_brand" class="form-control md-form" id="product_brand"
+                                        <select name="product_brand" class="form-control md-form"
                                             required>
                                             <option value="1">
                                                 Vender
@@ -106,7 +106,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <select name="product_type" class="form-control md-form" id="product_type"
+                                        <select name="product_type" class="form-control md-form"
                                             required>
                                             <option value="1">
                                                 Product Type
@@ -116,17 +116,17 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input id="product_price" name="product_price" type="number"
+                                        <input name="product_price" type="number"
                                             class="form-control md-form" min="1" placeholder="Price" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <input id="product_amount" name="product_amount" type="number"
+                                        <input name="product_amount" type="number"
                                             class="form-control md-form" min="1" placeholder="Product Amount" required>
                                     </div>
                                     <div class="form-group">
 
-                                        <input id="image_file" type="file" name="image_file"
+                                        <input type="file" name="image_file"
                                             class="form-control md-form" id="inputEmail3" placeholder="" required>
                                     </div>
 
@@ -203,9 +203,11 @@
                                                 aria-label="Left Align" >
                                                 <i class="fa fa-info-circle fa-1x"></i>
                                             </button>
+                                            <!-- data model for info btn -->
 
-                                            <button  type="button" class="col-12 btn-sm btn btn-default update_product"
-                                                aria-label="Left Align">
+
+                                            <button value="{{ $product_list->id }}"  type="button" class="col-12 btn-sm btn btn-default update_productbtn"
+                                                aria-label="Left Align" data-toggle="modal" data-target="#updateproduct">
                                                 <i class="fa fa-edit fa-1x"></i>
                                             </button>
 
@@ -223,8 +225,36 @@
                             </tbody>
 
                         </table>
+                        <div class="modal fade" id="product_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Product Detail</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group list-group-flush">
+                            <li id="name" class="list-group-item"></li>
+                            <li id="amount" class="list-group-item"></li>
+                            <li id="price" class="list-group-item"></li>
+                            <li id="product_detail" class="list-group-item"></li>
+                            <li id="product_type" class="list-group-item"></li>
+                            <li id="vender_detail" class="list-group-item"></li>
+                            <li id="shop_name" class="list-group-item">{{ $shop->shop_name }}</li>
+                            <li id="" class="list-group-item"></li>
+                          </ul>
+                    </div>
+
+                  </div>
+                </div>
+            </div>
                     </div>
                 </div>
+
+
+            </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-7">
                         <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
@@ -252,32 +282,82 @@
             </div>
             @endif
 
-            <!-- data model for info btn -->
-            <div class="modal fade" id="product_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header text-center">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Product Detail</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="list-group list-group-flush">
-                            <li id="name" class="list-group-item"></li>
-                            <li id="amount" class="list-group-item"></li>
-                            <li id="price" class="list-group-item"></li>
-                            <li id="product_detail" class="list-group-item"></li>
-                            <li id="product_type" class="list-group-item"></li>
-                            <li id="vender_detail" class="list-group-item"></li>
-                            <li id="shop_name" class="list-group-item">{{ $shop->shop_name }}</li>
-                            <li id="" class="list-group-item"></li>
-                          </ul>
-                    </div>
+             <!-- model for update product information-->
+                <div class="modal fade" id="updateproduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold"> Update Product
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body mx-3">
+                            <div class="is-valid">
+                                <form id="addShop" action="" method="POST" role="form" enctype="multipart/form-data">
+                                    <!--hidden filed -->
+                                    <input name="shop" type="hidden" value="{{ $shop->id }}">
 
-                  </div>
+
+                                    {{ csrf_field() }}
+                                    <div class="form-group">
+
+                                        <input id="product_name" name="product_name" type="text"
+                                            class="form-control md-form" id="exampleFormControlInput1"
+                                            placeholder="Product Name" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select name="product_brand" class="form-control md-form" id="product_brand"
+                                            required>
+                                            <option value="1">
+                                                Vender
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select name="product_type" class="form-control md-form" id="product_type"
+                                            required>
+                                            <option value="1">
+                                                Product Type
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input id="product_price" name="product_price" type="number"
+                                            class="form-control md-form" min="1" placeholder="Price" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input id="product_amount" name="product_amount" type="number"
+                                            class="form-control md-form" min="1" placeholder="Product Amount" required>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input id="image_file" type="file" name="image_file"
+                                            class="form-control md-form" id="inputEmail3" placeholder="">
+                                    </div>
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center bg-warning">
+                            <button id="updateproductshop" type="submit" class="btn btn-default ">Update Product</button>
+                        </div>
+                    </div>
+                    </form>
                 </div>
-              </div>
+
+
+
 
         </div>
     </div>
@@ -327,8 +407,9 @@
 
     function deleteProduct(productID){
         console.log(productID);
+
         $.ajax({
-                    url: "http://shemach.dev/product/delete/"+productID,
+                    url: "http://shemach.test/product/delete/"+productID,
                     type: 'DELETE',
                     data: {
                         "productID": productID,
@@ -336,10 +417,12 @@
                 }).done(
                     function(result) {
                         console.log(result);
-                        window.location.reload();
                             swal("Poof! Your file has been deleted!", {
                                 icon: "success",
                             });
+                            setTimeout(function(){
+                                window.location.reload();
+                            },3000);
 
                     }
                 ).fail(
@@ -369,7 +452,7 @@
 
         $.ajax({
             type: "GET",
-            url:'http://shemach.dev/product/detail/'+ product_id,
+            url:'http://shemach.test/product/detail/'+ product_id,
             data:{
                 'product_id': product_id
             }
@@ -386,7 +469,6 @@
                 $('#product_detail').html(response.product_detail_id);
                 $('#product_type').html(response.product_type_id);
                 $('#vender_detail').html(response.product_vender_id);
-
 
                 $('#product_info').modal('show');
             }
@@ -411,7 +493,7 @@
                 $.ajax({
                     type: "POST",
                     enctype: 'multipart/form-data',
-                    url:'http://shemach.dev/product',
+                    url:'http://shemach.test/product',
                     data: addProductFormData,
                     cache: false,
                     contentType: false,
@@ -426,7 +508,7 @@
                                 toast: true,
                                 position: 'top-end',
                                 button: false,
-                                timer: 3000,
+                                timer: 2000,
                                 timerProgressBar: true,
                                 onOpen: (toast) => {
                                 toast.addEventListener('mouseenter', swal.stopTimer)
@@ -436,7 +518,9 @@
 
                             console.log(response);
                             //alert( "second success" );
-                            window.location.reload();
+                            setTimeout(function(){
+                                window.location.reload();
+                            },3000);
 
                     }
 
@@ -474,7 +558,7 @@
         console.log(locationFormData);
         $.ajax({
             type: "POST",
-            url: 'http://shemach.dev/shop/location',
+            url: 'http://shemach.test/shop/location',
             data: locationFormData,
             cache: false,
             contentType: false,
@@ -505,6 +589,70 @@
             }
         );
     });
+
+
+    ///// update_product///
+
+
+    $('.update_productbtn').click(function (e) {
+        console.log('update_product clicked');
+        e.preventDefault();
+
+        //geting clicked id
+        let proudct_id =  $(this).attr("value");
+        console.log('id ' + proudct_id );
+        $.ajax({
+            type: "GET",
+            url: "http://shemach.test/product/detail/"+ proudct_id,
+            data: {'product_id' : proudct_id},
+
+
+        }).done(function (response) {
+            console.log(response);
+            //window.open(response,'_blank')
+
+            // adding previous result
+            $('#product_name').val(response.product_name);
+            $('#product_price').val(response.price);
+            $('#product_amount').val(response.product_amount);
+            $('#product_name').val(response.product_name);
+            $('#product_name').val(response.product_name);
+            $('#updateproductshop').attr('value', response.id);
+
+
+         }).fail(function (response) {
+            console.log(response);
+          });
+
+        //geting product detail
+
+    });
+/////////////////////if update pressed///////////////
+    $('#updateproductshop').click(function (e) {
+        console.log('update pressed');
+        let product_id = $(this).attr('value');
+        // console.log("product id is " + product_id);
+
+        // console.log($('#addShop')[0])
+        // let form = $('#addShop')[0];
+        // let localupdate = new FormData(form);
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: "http://shemach.test/product/update/"+ product_id,
+        //     data: localupdate,
+        //     catch:false,
+        //     contentType: false,
+        //     processData: false
+
+        // }).done(function (response) {
+        //     console.log(response);
+        // }).fail(function (response) {
+        //     console.log(response);
+        // });
+
+     });
+
     </script>
     </div>
 @endsection

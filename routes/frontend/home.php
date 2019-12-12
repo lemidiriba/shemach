@@ -61,5 +61,7 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::resource('product', 'ProductController');
         Route::delete('product/delete/{id}', [ProductController::class, 'destroy'])->name('deleteProduct');
         Route::get('product/detail/{id}', ['uses' => 'ProductController@detail'])->name('productDetail');
+        Route::patch('product/update/{id}', [ProductController::class, 'update'])->name('productUpdate');
+
     });
 });
