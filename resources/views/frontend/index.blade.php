@@ -86,6 +86,48 @@
     <!-- container .//  -->
 </section>
 <!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- ========================= SECTION ITEMS ========================= -->
+<section class="section-request bg padding-y-sm">
+    <div class="container">
+        <header class="section-heading heading-line">
+            <h4 class="title-section bg text-uppercase">Recommended items</h4>
+        </header>
+
+        <div class="row-sm">
+            @if (count($product_datas) > 0)
+            @foreach ($product_datas as $product_data)
+
+
+            <div class="col-md-2">
+                <figure class="card card-product">
+                    <div class="img-wrap"> <img
+                            src="{{ asset('shop_image/product_image/'.$product_data->product_image) }}"></div>
+                    <figcaption class="info-wrap">
+                        <h6 class="title"><a href="#">{{ ucwords($product_data->product_name) }}</a></h6>
+
+                        <div class="price-wrap">
+                            <span class="price-new">{{ $product_data->price }}</span>
+                            <del
+                                class="price-old">{{ (int)(($product_data->price) +($product_data->price * (8/100))) }}</del>
+                        </div>
+                        <!-- price-wrap.// -->
+
+                    </figcaption>
+                </figure>
+                <!-- card // -->
+            </div>
+            @endforeach
+            @endif
+            <!-- col // -->
+        </div>
+        <!-- row.// -->
+
+
+    </div>
+    <!-- container // -->
+</section>
+<!-- ========================= SECTION ITEMS .END// ========================= -->
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content padding-y-sm bg">
     <div class="container">
@@ -218,47 +260,7 @@
     <!-- container // -->
 </section>
 <!-- ========================= SECTION REQUEST .END// ========================= -->
-<!-- ========================= SECTION ITEMS ========================= -->
-<section class="section-request bg padding-y-sm">
-    <div class="container">
-        <header class="section-heading heading-line">
-            <h4 class="title-section bg text-uppercase">Recommended items</h4>
-        </header>
 
-        <div class="row-sm">
-            @if (count($product_datas) > 0)
-            @foreach ($product_datas as $product_data)
-
-
-            <div class="col-md-2">
-                <figure class="card card-product">
-                    <div class="img-wrap"> <img
-                            src="{{ asset('shop_image/product_image/'.$product_data->product_image) }}"></div>
-                    <figcaption class="info-wrap">
-                        <h6 class="title"><a href="#">{{ ucwords($product_data->product_name) }}</a></h6>
-
-                        <div class="price-wrap">
-                            <span class="price-new">{{ $product_data->price }}</span>
-                            <del
-                                class="price-old">{{ (int)(($product_data->price) +($product_data->price * (8/100))) }}</del>
-                        </div>
-                        <!-- price-wrap.// -->
-
-                    </figcaption>
-                </figure>
-                <!-- card // -->
-            </div>
-            @endforeach
-            @endif
-            <!-- col // -->
-        </div>
-        <!-- row.// -->
-
-
-    </div>
-    <!-- container // -->
-</section>
-<!-- ========================= SECTION ITEMS .END// ========================= -->
 <!-- ========================= SECTION LINKS ========================= -->
 <section class="section-links bg padding-y-sm">
     <div class="container">
