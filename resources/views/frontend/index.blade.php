@@ -346,7 +346,7 @@
 
     $.ajax({
     method:"GET",
-    url:'http://shemach.dev/shop/location/all',
+    url:'http://shemach.test/shop/location/all',
     cache: true,
 
 
