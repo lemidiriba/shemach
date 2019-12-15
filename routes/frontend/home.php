@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\Product\ProductController;
+use App\Http\Controllers\Frontend\Product\ProductDetailController;
 use App\Http\Controllers\Frontend\Shop\ShopController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\DashboardController;
@@ -65,9 +66,7 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
     });
 });
 
-R
-Route::group(['namespace' => 'ProductDetail'], function() {
-    Route::get('users/{id}', function ($id) {
 
-    });
+Route::group(['namespace' => 'ProductDetail'], function () {
+    Route::get('productdetail/{id}', [ProductDetailController::class, "index"])->name('productdetaul');
 });

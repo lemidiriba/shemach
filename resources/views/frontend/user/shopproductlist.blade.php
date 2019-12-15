@@ -34,8 +34,9 @@
                                 <div class="input-group">
                                     <input type="hidden" name="shop_id" value="{{ $shop->id }}">
                                     <input name="lng" type="number" min="o" value="" placeholder="Longtude"
-                                        class="form-control ml-1" required >
-                                    <input name="lat" type="number" min="0" value="" placeholder="Latitude" class="form-control" required>
+                                        class="form-control ml-1" required>
+                                    <input name="lat" type="number" min="0" value="" placeholder="Latitude"
+                                        class="form-control" required>
                                     <div class="input-group-append">
                                         <button id="add_location" class="btn btn-sm btn-warning"
                                             type="submit">Add</button>
@@ -90,14 +91,12 @@
                                     {{ csrf_field() }}
                                     <div class="form-group">
 
-                                        <input name="product_name" type="text"
-                                            class="form-control md-form" id="exampleFormControlInput1"
-                                            placeholder="Product Name" required>
+                                        <input name="product_name" type="text" class="form-control md-form"
+                                            id="exampleFormControlInput1" placeholder="Product Name" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <select name="product_brand" class="form-control md-form"
-                                            required>
+                                        <select name="product_brand" class="form-control md-form" required>
                                             <option value="1">
                                                 Vender
                                             </option>
@@ -106,8 +105,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <select name="product_type" class="form-control md-form"
-                                            required>
+                                        <select name="product_type" class="form-control md-form" required>
                                             <option value="1">
                                                 Product Type
                                             </option>
@@ -116,18 +114,18 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input name="product_price" type="number"
-                                            class="form-control md-form" min="1" placeholder="Price" required>
+                                        <input name="product_price" type="number" class="form-control md-form" min="1"
+                                            placeholder="Price" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <input name="product_amount" type="number"
-                                            class="form-control md-form" min="1" placeholder="Product Amount" required>
+                                        <input name="product_amount" type="number" class="form-control md-form" min="1"
+                                            placeholder="Product Amount" required>
                                     </div>
                                     <div class="form-group">
 
-                                        <input type="file" name="image_file"
-                                            class="form-control md-form" id="inputEmail3" placeholder="" required>
+                                        <input type="file" name="image_file" class="form-control md-form"
+                                            id="inputEmail3" placeholder="" required>
                                     </div>
 
 
@@ -199,19 +197,23 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="mt-5 row align-content-center">
-                                            <button value="{{ $product_list->id }}" type="button" class="col-12 btn btn-sm btn-default product_detail"
-                                                aria-label="Left Align" >
+                                            <button value="{{ $product_list->id }}" type="button"
+                                                class="col-12 btn btn-sm btn-default product_detail"
+                                                aria-label="Left Align">
                                                 <i class="fa fa-info-circle fa-1x"></i>
                                             </button>
                                             <!-- data model for info btn -->
 
 
-                                            <button value="{{ $product_list->id }}"  type="button" class="col-12 btn-sm btn btn-default update_productbtn"
-                                                aria-label="Left Align" data-toggle="modal" data-target="#updateproduct">
+                                            <button value="{{ $product_list->id }}" type="button"
+                                                class="col-12 btn-sm btn btn-default update_productbtn"
+                                                aria-label="Left Align" data-toggle="modal"
+                                                data-target="#updateproduct">
                                                 <i class="fa fa-edit fa-1x"></i>
                                             </button>
 
-                                            <button value="{{ $product_list->id }}" type="button" class="col-12 btn btn-sm btn-default delete_product"
+                                            <button value="{{ $product_list->id }}" type="button"
+                                                class="col-12 btn btn-sm btn-default delete_product"
                                                 aria-label="Left Align">
                                                 <i class="fa fa-trash fa-1x"></i>
                                             </button>
@@ -225,137 +227,135 @@
                             </tbody>
 
                         </table>
-                        <div class="modal fade" id="product_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header text-center">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Product Detail</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="list-group list-group-flush">
-                            <li id="name" class="list-group-item"></li>
-                            <li id="amount" class="list-group-item"></li>
-                            <li id="price" class="list-group-item"></li>
-                            <li id="product_detail" class="list-group-item"></li>
-                            <li id="product_type" class="list-group-item"></li>
-                            <li id="vender_detail" class="list-group-item"></li>
-                            <li id="shop_name" class="list-group-item">{{ $shop->shop_name }}</li>
-                            <li id="" class="list-group-item"></li>
-                          </ul>
-                    </div>
-
-                  </div>
-                </div>
-            </div>
-                    </div>
-                </div>
-
-
-            </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-7">
-                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                            <ul class="pagination">
-                                <li class="paginate_button page-item previous disabled" id="example1_previous"><a
-                                        href="#" aria-controls="example1" data-dt-idx="0" tabindex="0"
-                                        class="page-link">Previous</a>
-                                </li>
-
-                                <li class="paginate_button page-item next" id="example1_next"><a href="#"
-                                        aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @else
-            <!-- table ends -->
-            <div class="alert alert-info alert-dismissible text-center">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5 googl="true"><i class="icon fas fa-info"></i> Alert!</h5>
-                Info alert preview. Press the green Button to Add Product to the Shop.
-            </div>
-            @endif
-
-             <!-- model for update product information-->
-                <div class="modal fade" id="updateproduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header text-center">
-                            <h4 class="modal-title w-100 font-weight-bold"> Update Product
-                            </h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body mx-3">
-                            <div class="is-valid">
-                                <form id="addShop" action="" method="POST" role="form" enctype="multipart/form-data">
-                                    <!--hidden filed -->
-                                    <input name="shop" type="hidden" value="{{ $shop->id }}">
-
-
-                                    {{ csrf_field() }}
-                                    <div class="form-group">
-
-                                        <input id="product_name" name="product_name" type="text"
-                                            class="form-control md-form" id="exampleFormControlInput1"
-                                            placeholder="Product Name" required>
+                        <div class="modal fade" id="product_info" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-center">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Product Detail</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li id="name" class="list-group-item"></li>
+                                            <li id="amount" class="list-group-item"></li>
+                                            <li id="price" class="list-group-item"></li>
+                                            <li id="product_detail" class="list-group-item"></li>
+                                            <li id="product_type" class="list-group-item"></li>
+                                            <li id="vender_detail" class="list-group-item"></li>
+                                            <li id="shop_name" class="list-group-item">{{ $shop->shop_name }}</li>
+                                            <li id="" class="list-group-item"></li>
+                                        </ul>
                                     </div>
 
-                                    <div class="form-group">
-                                        <select name="product_brand" class="form-control md-form" id="product_brand"
-                                            required>
-                                            <option value="1">
-                                                Vender
-                                            </option>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <select name="product_type" class="form-control md-form" id="product_type"
-                                            required>
-                                            <option value="1">
-                                                Product Type
-                                            </option>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input id="product_price" name="product_price" type="number"
-                                            class="form-control md-form" min="1" placeholder="Price" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input id="product_amount" name="product_amount" type="number"
-                                            class="form-control md-form" min="1" placeholder="Product Amount" required>
-                                    </div>
-                                    <div class="form-group">
-
-                                        <input id="image_file" type="file" name="image_file"
-                                            class="form-control md-form" id="inputEmail3" placeholder="">
-                                    </div>
-
-
-
+                                </div>
                             </div>
-
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center bg-warning">
-                            <button id="updateproductshop" type="submit" class="btn btn-default ">Update Product</button>
                         </div>
                     </div>
-                    </form>
                 </div>
 
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                        <ul class="pagination">
+                            <li class="paginate_button page-item previous disabled" id="example1_previous"><a href="#"
+                                    aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                            </li>
+
+                            <li class="paginate_button page-item next" id="example1_next"><a href="#"
+                                    aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @else
+        <!-- table ends -->
+        <div class="alert alert-info alert-dismissible text-center">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5 googl="true"><i class="icon fas fa-info"></i> Alert!</h5>
+            Info alert preview. Press the green Button to Add Product to the Shop.
+        </div>
+        @endif
+
+        <!-- model for update product information-->
+        <div class="modal fade" id="updateproduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold"> Update Product
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <div class="is-valid">
+                            <form id="addShop" action="" method="POST" role="form" enctype="multipart/form-data">
+                                <!--hidden filed -->
+                                <input name="shop" type="hidden" value="{{ $shop->id }}">
+
+
+                                {{ csrf_field() }}
+                                <div class="form-group">
+
+                                    <input id="product_name" name="product_name" type="text"
+                                        class="form-control md-form" id="exampleFormControlInput1"
+                                        placeholder="Product Name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="product_brand" class="form-control md-form" id="product_brand"
+                                        required>
+                                        <option value="1">
+                                            Vender
+                                        </option>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="product_type" class="form-control md-form" id="product_type" required>
+                                        <option value="1">
+                                            Product Type
+                                        </option>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="product_price" name="product_price" type="number"
+                                        class="form-control md-form" min="1" placeholder="Price" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="product_amount" name="product_amount" type="number"
+                                        class="form-control md-form" min="1" placeholder="Product Amount" required>
+                                </div>
+                                <div class="form-group">
+
+                                    <input id="image_file" type="file" name="image_file" class="form-control md-form"
+                                        id="inputEmail3" placeholder="">
+                                </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center bg-warning">
+                        <button id="updateproductshop" type="submit" class="btn btn-default ">Update Product</button>
+                    </div>
+                </div>
+                </form>
+            </div>
 
 
 
@@ -654,5 +654,5 @@
      });
 
     </script>
-    </div>
+</div>
 @endsection
