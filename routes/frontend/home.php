@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
+Route::get('product-detail/{id}', [ProductDetailController::class, "show"])->name('product-detail');
+
 
 /*
  * These frontend controllers require the user to be logged in
@@ -64,9 +66,4 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::get('product/detail/{id}', ['uses' => 'ProductController@detail'])->name('productDetail');
         Route::patch('product/update/{id}', [ProductController::class, 'update'])->name('productUpdate');
     });
-});
-
-
-Route::group(['namespace' => 'ProductDetail'], function () {
-    Route::get('productdetail/{id}', [ProductDetailController::class, "index"])->name('productdetaul');
 });

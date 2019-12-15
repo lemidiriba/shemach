@@ -40,12 +40,19 @@
                     <div class="row no-gutters">
                         <aside class="col-sm-6 border-right">
                             <article class="gallery-wrap">
-                                <div class="img-big-wrap">
-                                    <div> <a href="images/items/1.jpg" data-fancybox=""><img
-                                                src="images/items/1.jpg"></a></div>
+                                <div class="img-big-wrap p-2">
+                                    <div>
+                                        <a href="{{ asset('/shop_image/product_image/'.$product_data->product_image) }}"
+                                            data-fancybox="">
+                                            <img class="img-fluid"
+                                                src="{{ asset('/shop_image/product_image/'.$product_data->product_image) }}">
+                                        </a>
+                                    </div>
                                 </div> <!-- slider-product.// -->
                                 <div class="img-small-wrap">
-                                    <div class="item-gallery"> <img src="images/items/1.jpg"></div>
+                                    <div class="item-gallery"> <img
+                                            src="{{ asset('/shop_image/product_image/'.$product_data->product_image) }}">
+                                    </div>
 
                                 </div> <!-- slider-nav.// -->
                             </article> <!-- gallery-wrap .end// -->
@@ -53,13 +60,15 @@
                         <aside class="col-sm-6">
                             <article class="card-body">
                                 <!-- short-info-wrap -->
-                                <h3 class="title mb-3">Original Version of Some product name</h3>
+                                <h3 class="title mb-3">{{ ucwords($product_data->product_name) }} from
+                                    {{ ucwords($shop_info->shop_name) }}</h3>
 
                                 <div class="mb-3">
                                     <var class="price h3 text-warning">
-                                        <span class="currency">US $</span><span class="num">1299</span>
+                                        <span class="currency">Birr </span><span
+                                            class="num">{{ $product_data->price }}</span>
                                     </var>
-                                    <span>/per kg</span>
+                                    <span>/Single</span>
                                 </div> <!-- price-detail-wrap .// -->
                                 <dl>
                                     <dt>Description</dt>
@@ -103,9 +112,10 @@
                                             <dt>Quantity: </dt>
                                             <dd>
                                                 <select class="form-control form-control-sm" style="width:70px;">
-                                                    <option> 1 </option>
-                                                    <option> 2 </option>
-                                                    <option> 3 </option>
+                                                    @for ($i = 1; $i <= $product_data->available; $i++)
+                                                        <option value="{{ $i }}"> {{ $i }} </option>
+                                                        @endfor
+
                                                 </select>
                                             </dd>
                                         </dl> <!-- item-property .// -->
@@ -119,16 +129,7 @@
                                                         id="inlineRadio2" value="option2" type="radio">
                                                     <span class="form-check-label">SM</span>
                                                 </label>
-                                                <label class="form-check form-check-inline">
-                                                    <input class="form-check-input" name="inlineRadioOptions"
-                                                        id="inlineRadio2" value="option2" type="radio">
-                                                    <span class="form-check-label">MD</span>
-                                                </label>
-                                                <label class="form-check form-check-inline">
-                                                    <input class="form-check-input" name="inlineRadioOptions"
-                                                        id="inlineRadio2" value="option2" type="radio">
-                                                    <span class="form-check-label">XXL</span>
-                                                </label>
+
                                             </dd>
                                         </dl> <!-- item-property .// -->
                                     </div> <!-- col.// -->
@@ -136,7 +137,7 @@
                                 <hr>
                                 <a href="#" class="btn  btn-warning"> <i class="fa fa-envelope"></i> Contact Supplier
                                 </a>
-                                <a href="#" class="btn  btn-outline-warning"> Start Order </a>
+                                <a href="#" class="btn  btn-outline-warning"> Supplier Information </a>
                                 <!-- short-info-wrap .// -->
                             </article> <!-- card-body.// -->
                         </aside> <!-- col.// -->
@@ -146,25 +147,33 @@
                 <!-- PRODUCT DETAIL -->
                 <article class="card mt-3">
                     <div class="card-body">
-                        <h4>Detail overview</h4>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident, sunt in culpa qui officia ididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi deserunt mollit anim id est laborum.</p>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteurididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi sint occaecat cupidatat non
-                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        
-                    </div> <!-- card-body.// -->
+                        <h4>{{ ucwords($shop_info->shop_name) }} Shop overview</h4>
+                        <div class="row-sm">
+                            @if (count($shop_items) > 0)
+                            @foreach ($shop_items as $item)
+                            <div class="col-md-3 col-sm-6">
+                                <figure class="card card-product">
+                                    <div class="img-wrap"> <img
+                                            src="{{ asset('shop_image/product_image/'.$item->product_image) }}">
+                                    </div>
+                                    <figcaption class="info-wrap">
+                                        <a href="#" class="title">{{ $item->product_name }}</a>
+                                        <div class="price-wrap">
+                                            <span class="price-new">{{ $item->price }}</span>
+                                            <del
+                                                class="price-old">{{ (int)(($item->price)+($item->price*(8/100))) }}</del>
+                                        </div>
+                                        <!-- price-wrap.// -->
+                                    </figcaption>
+                                </figure>
+                                <!-- card // -->
+                            </div>
+                            @endforeach
+                            @else
+
+                            @endif
+
+                        </div> <!-- card-body.// -->
                 </article> <!-- card.// -->
 
                 <!-- PRODUCT DETAIL .// -->
@@ -173,7 +182,7 @@
             <aside class="col-xl-2 col-md-3 col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        Trade Assurance
+                        Promotion
                     </div>
                     <div class="card-body small">
                         <span>China | Trading Company</span>
@@ -185,22 +194,33 @@
 
                     </div> <!-- card-body.// -->
                 </div> <!-- card.// -->
+
                 <div class="card mt-3">
                     <div class="card-header">
                         You may like
                     </div>
                     <div class="card-body row">
+
+                        @if (count($recomanded_items) > 0)
+                        @foreach ($recomanded_items as $item)
                         <div class="col-md-12 col-sm-3">
                             <figure class="item border-bottom mb-3">
-                                <a href="#" class="img-wrap"> <img src="images/items/2.jpg" class="img-md"></a>
+                                <a href="#" class="img-wrap"> <img class="img-fluid"
+                                        src="{{ asset('/shop_image/product_image/'.$item->product_image) }}"
+                                        class="img-md"></a>
                                 <figcaption class="info-wrap">
-                                    <a href="#" class="title">The name of product</a>
+                                    <a href="#" class="title">{{ ucwords($item->shop->shop_name) }}</a>
                                     <div class="price-wrap mb-3">
-                                        <span class="price-new">$280</span> <del class="price-old">$280</del>
+                                        <span class="price-new">{{ $item->price }}</span> <del
+                                            class="price-old">{{ (int)(($item->price)+($item->price*(8/100))) }}</del>
                                     </div> <!-- price-wrap.// -->
                                 </figcaption>
                             </figure> <!-- card-product // -->
-                        </div> <!-- col.// -->
+                        </div><!-- col.// -->
+                        @endforeach
+
+                        @endif
+
 
                     </div> <!-- card-body.// -->
                 </div> <!-- card.// -->

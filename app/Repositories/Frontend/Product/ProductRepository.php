@@ -31,7 +31,6 @@ class ProductRepository extends BaseRepository
      */
     public function getByShop($shop_id)
     {
-        return $this->where('shop_id', $shop_id)->get();
+        return $this->where('shop_id', $shop_id)->all()->random(2);
     }
-
 }

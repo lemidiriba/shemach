@@ -56,9 +56,9 @@
                         <div style="height:280px;">
                             @foreach ($shop_datas as $shop_data)
 
-                            <figure class="itemside has-bg border-bottom m-1 embed-responsive embed-responsive-4by3"
-                                style="height: 33%;">
-                                <img class="img-bg " src="{{ asset('shop_image/shop_logo/'.$shop_data->Shop_logo) }} ">
+                            <figure class="itemside has-bg border-bottom m-1 img-fluid" style="height: 33%;">
+                                <img class="img-bg img-fluid"
+                                    src="{{ asset('shop_image/shop_logo/'.$shop_data->Shop_logo) }} ">
                                 <figcaption class="p-2">
                                     <h6 class="title">{{ ucwords($shop_data->shop_name) }} </h6>
                                     <a href="#">Shop link</a>
@@ -104,7 +104,9 @@
                     <div class="img-wrap"> <img
                             src="{{ asset('shop_image/product_image/'.$product_data->product_image) }}"></div>
                     <figcaption class="info-wrap">
-                        <h6 class="title"><a href="#">{{ ucwords($product_data->product_name) }}</a></h6>
+                        <h6 class="title"><a
+                                href="product-detail/{{ $product_data->id }}">{{ ucwords($product_data->product_name) }}</a>
+                        </h6>
 
                         <div class="price-wrap">
                             <span class="price-new">{{ $product_data->price }}</span>
@@ -336,7 +338,6 @@
 <!-- ========================= SECTION SUBSCRIBE END.//========================= -->
 
 <script>
-
     var map;
 
     $.ajaxSetup({
