@@ -5,9 +5,11 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\Product\ProductController;
 use App\Http\Controllers\Frontend\Product\ProductDetailController;
 use App\Http\Controllers\Frontend\Shop\ShopController;
+use App\Http\Controllers\Frontend\shop\ShopOwnerController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\DashboardController;
 use App\Http\Controllers\Frontend\User\ProfileController;
+use App\Models\ShopOwner;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
-Route::get('product-detail/{id}', [ProductDetailController::class, "show"])->name('product-detail');
+Route::get('product-detail/{id}', [ProductDetailController::class, 'show'])->name('product-detail');
+Route::get('shop-owner/{id}', [ShopOwnerController::class, 'owner'])->name('shop-owner-detail');
 
 
 /*
@@ -55,6 +58,7 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::post('shop/location', [ShopController::class, 'addLocation'])->name('addLocation');
         //added to home controller
         Route::get('/shop/location/all', [HomeController::class, 'getShopLocation'])->name('getallshops');
+        //added to shop owner controller
     });
 });
 

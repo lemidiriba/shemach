@@ -18,6 +18,7 @@ class ShopOwnerController extends Controller
      */
     public function __construct(ShopOwnerRepository $shopOwnerRepository)
     {
+        $this->middleware('auth')->except('owner');
         $this->shopOwnerRepository = $shopOwnerRepository;
     }
 
@@ -95,5 +96,17 @@ class ShopOwnerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Shop-owner function
+     *
+     * @param Int $id
+     * @return void
+     */
+    public function owner($id)
+    {
+        //return 'lemi';
+        return $this->shopOwnerRepository->getById($id);
     }
 }

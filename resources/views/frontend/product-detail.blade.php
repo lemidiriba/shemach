@@ -135,9 +135,36 @@
                                     </div> <!-- col.// -->
                                 </div> <!-- row.// -->
                                 <hr>
-                                <a href="#" class="btn  btn-warning"> <i class="fa fa-envelope"></i> Contact Supplier
+                                <a id="get-contact" href="" class="btn  btn-warning" value="{{ $shop_info->id }}"
+                                    data-toggle="modal" data-target="#supplier_contact_model"> <i
+                                        class="fa fa-envelope"></i> Contact
+                                    Supplier
                                 </a>
-                                <a href="#" class="btn  btn-outline-warning"> Supplier Information </a>
+                                <!-- Button trigger modal -->
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="supplier_contact_model" tabindex="-1" role="dialog"
+                                    aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ul class="list-group">
+
+                                                    <li id="shopowner_name" class="list-group-item"></li>
+                                                    <li id="shopowner_email" class="list-group-item"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" class="btn  btn-outline-warning"> Supplier Location </a>
                                 <!-- short-info-wrap .// -->
                             </article> <!-- card-body.// -->
                         </aside> <!-- col.// -->
@@ -157,7 +184,8 @@
                                             src="{{ asset('shop_image/product_image/'.$item->product_image) }}">
                                     </div>
                                     <figcaption class="info-wrap">
-                                        <a href="#" class="title">{{ $item->product_name }}</a>
+                                        <a href="/product-detail/{{ $item->id }}"
+                                            class="title">{{ $item->product_name }}</a>
                                         <div class="price-wrap">
                                             <span class="price-new">{{ $item->price }}</span>
                                             <del
@@ -209,7 +237,8 @@
                                         src="{{ asset('/shop_image/product_image/'.$item->product_image) }}"
                                         class="img-md"></a>
                                 <figcaption class="info-wrap">
-                                    <a href="#" class="title">{{ ucwords($item->shop->shop_name) }}</a>
+                                    <a href="/product-detail/{{ $item->id }}"
+                                        class="title">{{ ucwords($item->shop->shop_name) }}</a>
                                     <div class="price-wrap mb-3">
                                         <span class="price-new">{{ $item->price }}</span> <del
                                             class="price-old">{{ (int)(($item->price)+($item->price*(8/100))) }}</del>
@@ -232,4 +261,37 @@
     </div><!-- container // -->
 </section>
 <!-- ========================= SECTION CONTENT .END// ========================= -->
+
+<script>
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
+
+    $("#get-contact").click(function (e) {
+
+        let shopOwner = $(this).attr('value');
+        console.log("shop Owner ID " + shopOwner);
+
+        $.ajax({
+            type: "GET",
+            url: "http://shemach.test/shop-owner/" + shopOwner,
+            data: {
+                'shopOwner' : shopOwner,
+            }
+
+        }).done(function (response) {
+            console.log('this is done');
+            console.log(response);
+            $('#shopowner_name').html(response.first_name +' '+ response.last_name);
+            $('#shopowner_email').html(response.email);
+        }).fail(function (response) {
+            console.log('this is fail');
+            console.log(response);
+         });
+
+    });
+
+</script>
 @endsection
