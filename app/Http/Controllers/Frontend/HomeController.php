@@ -48,8 +48,25 @@ class HomeController extends Controller
      */
     public function getShopLocation()
     {
-        //return $allLocation = ShopLocation::all()->pluck(['shop_id', 'latitude', 'longitude']);
-        return $allLocation = $this->shopLocationRepository->all(); //
-        #return $allLocation->pluck(['shop_id', 'latitude', 'longitude']);
+        return $allLocation = $this->shopRepository->getBasicinfoShop(); //
+
+    }
+
+    /**
+     * SpecificShop function
+     * retrieves product and shop detail
+     * @param Int shopid
+     * @return view
+     */
+    public function specificShop($shopid)
+    {
+        $shop_data = $this->shopRepository->getById($shopid);
+        $shop_products = $this->shopRepository->getById($shopid)->product;
+
+        return view('frontend.shop-listing')
+            ->with([
+                'shopdata' => $shop_data,
+                'shopproducts' => $shop_products
+            ]);
     }
 }

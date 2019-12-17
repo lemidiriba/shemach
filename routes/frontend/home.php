@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/oneshop/{id}', [HomeController::class, 'specificShop'])->name('oneshop');
+
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
 Route::get('product-detail/{id}', [ProductDetailController::class, 'show'])->name('product-detail');
 Route::get('shop-owner/{id}', [ShopOwnerController::class, 'owner'])->name('shop-owner-detail');
+Route::get('/shop/location/all', [HomeController::class, 'getShopLocation'])->name('getallshops');
 
 
 /*
@@ -56,8 +59,7 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         /////////////////////////////////////////////////
         //add to ShopController
         Route::post('shop/location', [ShopController::class, 'addLocation'])->name('addLocation');
-        //added to home controller
-        Route::get('/shop/location/all', [HomeController::class, 'getShopLocation'])->name('getallshops');
+
         //added to shop owner controller
     });
 });

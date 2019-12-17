@@ -1,0 +1,7 @@
+.bg-one {
+    overflow: hidden;
+    background-color: #ddd;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 193, 7, 0.8)), url("../../img/frontend/banners/marcin-kempa-unsplash.jpg");
+    background-position: 0%;
+    background-size: cover;
+}

@@ -22,5 +22,4 @@ class ShopLocationRepository extends BaseRepository
     {
         $this->model = $model;
     }
-
 }

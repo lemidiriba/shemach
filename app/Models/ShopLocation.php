@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopLocation extends Model
 {
-
     /**
      * Relation function
      *
@@ -14,6 +13,6 @@ class ShopLocation extends Model
      */
     public function shop()
     {
-        return $this->hasOne(Shop::class);
+        return $this->belongsTo(Shop::class, 'shop_id', 'id');
     }
 }

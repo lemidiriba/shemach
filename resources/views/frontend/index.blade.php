@@ -8,18 +8,11 @@
 <style>
     #map {
         overflow: hidden;
-        padding-bottom: 56.25%;
-        height: 0;
 
-    }
+        width: 100% !important;
+        max-height: 100% !important;
 
-    #map iframe {
-        left: 0;
-        top: 0;
-        height: 50%;
-        width: 100%;
 
-        position: absolute;
     }
 </style>
 
@@ -46,7 +39,6 @@
 
                     <!-- col.// -->
                     <div id="map" class="col-md-6">
-                        <iframe src="" frameborder="0" style="border:0; height:50%;" allowfullscreen></iframe>
                     </div>
                     <!-- col.// -->
                     <aside class="col-md-3">
@@ -338,21 +330,20 @@
 <!-- ========================= SECTION SUBSCRIBE END.//========================= -->
 
 <script>
-    var map;
+    var map, popup, Popup, marker, infowindow;
+
 
     $.ajaxSetup({
-
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
+
     $.ajax({
     method:"GET",
     url:'http://shemach.test/shop/location/all',
     cache: true,
-
-
     }).done(
         function (e) {
             console.log('success');
@@ -362,34 +353,52 @@
 
                 const lat = parseFloat(e[i].longitude)
                 const lng =parseFloat(e[i].latitude)
-                addMarker(lat,lng); // var infoWindow=new
+                const shopinfo = e[i];
+                addMarker(lat, lng, shopinfo); // var infoWindow=new
 
             }
         }
     );
 
     function initMap() {
-        console.log('map inti statrt')
+        console.log('map inti start')
         //map options
         var options = {
             zoom:10,
-            center: {lat:8.9806 , lng:38.7578}
+            center: {lat:8.9806 , lng:38.7578},
+            height: "100%"
         }
         //new map
         map = new google.maps.Map(document.getElementById('map'),options);
 
     }
 
-    function addMarker(lat,lng) {
+    function addMarker(lat,lng,shopinfo) {
         console.log('here')
+        console.log(shopinfo)
         const latLng = {lat:lat,lng:lng}
 
         var marker = new google.maps.Marker({
             position:latLng,
+            label:{text: 'S'}
         });
+        var infowindow = new google.maps.InfoWindow({
+            content: "<h6>"+shopinfo.shop_name+"</h6><br>" + "<p></p>"
+        });
+
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+
         marker.setMap(map);
 
     }
+
+
+
+
+
+
 
 </script>
 

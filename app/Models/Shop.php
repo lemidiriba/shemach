@@ -26,11 +26,19 @@ class Shop extends Model
         return $this->belongsTo(ShopCatagory::class);
     }
     /**
-     * @return mixed
+     * @return mixed user
      */
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return mixed location
+     */
+    public function location()
+    {
+        return $this->hasOne(ShopLocation::class);
     }
 }
