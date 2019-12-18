@@ -170,7 +170,9 @@
                         </aside> <!-- col.// -->
                     </div> <!-- row.// -->
                 </main> <!-- card.// -->
-
+                <figure class="mt-3 banner p-3 bg-secondary">
+                    <div class="text-lg text-center white">Useful banner can be here</div>
+                </figure>
                 <!-- PRODUCT DETAIL -->
                 <article class="card mt-3">
                     <div class="card-body">

@@ -61,12 +61,13 @@ class HomeController extends Controller
     public function specificShop($shopid)
     {
         $shop_data = $this->shopRepository->getById($shopid);
-        $shop_products = $this->shopRepository->getById($shopid)->product;
+    $shop_products = $this->shopRepository->getById($shopid)->product;
 
         return view('frontend.shop-listing')
             ->with([
                 'shopdata' => $shop_data,
                 'shopproducts' => $shop_products
             ]);
+        //add page
     }
 }
