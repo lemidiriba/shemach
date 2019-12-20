@@ -3,7 +3,6 @@
 namespace App\Repositories\Frontend\Shop;
 
 use App\Models\Shop;
-use App\Models\ShopLocation;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 

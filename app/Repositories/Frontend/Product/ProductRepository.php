@@ -33,4 +33,21 @@ class ProductRepository extends BaseRepository
     {
         return $this->where('shop_id', $shop_id)->all()->random(2);
     }
+
+
+
+
+    /**
+     * AutoComplet function
+     *
+     * @param string $text
+     * @return json
+     */
+    public function getAutoComplete($shop_id, $text)
+    {
+        return $this
+            ->where('shop_id', $shop_id)
+            ->where("product_name", "%{$text}%", "LIKE")
+            ->get();
+    }
 }

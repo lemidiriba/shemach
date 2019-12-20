@@ -3,26 +3,33 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\ShopLocation;
+use App\Models\Shop;
 use App\Repositories\Frontend\Product\ProductRepository;
 use App\Repositories\Frontend\Shop\ShopLocationRepository;
 use App\Repositories\Frontend\Shop\ShopRepository;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class HomeController.
  */
 class HomeController extends Controller
 {
-
     protected $shopRepository;
     protected $productRepositery;
     protected $shopLocationRepository;
+    protected $shop_id;
+
+
+
     /**
      * Undocumented function
      *
      * @param ShopRepository $shopRepository
      */
     public function __construct(
+
         ShopRepository $shopRepository,
         ProductRepository $productRepositery,
         ShopLocationRepository $shopLocationRepository
@@ -58,16 +65,73 @@ class HomeController extends Controller
      * @param Int shopid
      * @return view
      */
-    public function specificShop($shopid)
+    public function specificShop(Request $request, $shopid)
     {
+        $shop_id = $shopid;
+        $price = $this->shopRepository->getById($shopid)->product();
+        $total = $price->count();
+        $statstic_data = array(
+            'max_price' => $price->max('price'),
+            'min_price' => $price->min('price'),
+            'total' => $total
+        );
         $shop_data = $this->shopRepository->getById($shopid);
-    $shop_products = $this->shopRepository->getById($shopid)->product;
+        $shop_products = $this->shopRepository->getById($shopid)
+            ->product()->paginate(3);
+        if ($request->ajax()) {
+            return [
+                'posts' => view('frontend.ajax.shop-product-list')->with(compact('shop_data', 'shop_products', 'statstic_data'))->render(),
+                'next_page' => $shop_products->nextPageUrl()
+            ];
+        }
 
         return view('frontend.shop-listing')
             ->with([
-                'shopdata' => $shop_data,
-                'shopproducts' => $shop_products
+                'shop_data' => $shop_data,
+                'shop_products' => $shop_products,
+                'statstic_data' => $statstic_data
             ]);
-        //add page
+    }
+
+    /**
+     * GatNameList function
+     *
+     * @param Int $shopid
+     * @param String $usertext
+     * @return void
+     */
+    public function getAutoCompleteList($shopid, $usertext)
+    {
+        return $this->productRepositery->getAutoComplete($shopid, $usertext)->unique('product_type')->pluck('product_name');
+    }
+
+    /**
+     * GetProductByName function
+     *
+     * @param Request $request
+     * @param Int $shopid
+     * @param String $productname
+     * @return void
+     */
+    public function getProductByName(Request $request, $shopid, $productname)
+    {
+        $price = $this->shopRepository->getById($shopid)->product();
+        $statstic_data = array(
+            'max_price' => $price->max('price'),
+            'min_price' => $price->min('price')
+        );
+        $shop_products =  $this->productRepositery->getAutoComplete($shopid, $productname);
+        $currentPage = Paginator::resolveCurrentPage() - 1;
+        $perPage = 2;
+        $currentPageSearchResults = $shop_products->slice($currentPage * $perPage, $perPage)->all();
+        $shop_products = new LengthAwarePaginator($currentPageSearchResults, count($shop_products), $perPage);
+
+        $shop_data = $this->shopRepository->getById($shopid);
+        if ($request->ajax()) {
+            return [
+                'posts' => view('frontend.ajax.shop-product-list')->with(compact('shop_data', 'shop_products', 'statstic_data'))->render(),
+                'next_page' => $shop_products->nextPageUrl()
+            ];
+        }
     }
 }

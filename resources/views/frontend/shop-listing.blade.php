@@ -11,8 +11,8 @@
         <div class="col-sm-6 mx-auto bg-dark-50">
             <article class="white text-center mb-5">
                 <img class="img-fluid img-thumbnail" style="max-width:25%;"
-                    src="{{ asset('/shop_image/shop_logo/'.$shopdata->Shop_logo) }}" alt="{{ $shopdata->shop_name }}">
-                <h1 class="display-3">{{ $shopdata->shop_name }}</h1>
+                    src="{{ asset('/shop_image/shop_logo/'.$shop_data->Shop_logo) }}" alt="{{ $shop_data->shop_name }}">
+                <h1 class="display-3">{{ $shop_data->shop_name }}</h1>
                 <p>This example is a quick exercise to illustrate how the navbar and its contents work. Some navbars
                     extend the width of the viewport, others are confined within... For positioning of navbars, checkout
                     .</p>
@@ -42,9 +42,10 @@
                             <div class="card-body">
                                 <form class="pb-3">
                                     <div class="input-group">
-                                        <input class="form-control" placeholder="Search" type="text">
+                                        <input id="search" class="form-control" placeholder="Search" type="text"
+                                            data-search-id="{{ $shop_data->id }}">
                                         <div class="input-group-append">
-                                            <button class="btn btn-secondary" type="button"><i
+                                            <button id="searchbtn" class="btn btn-secondary searchid" type="button"><i
                                                     class="fa fa-search"></i></button>
                                         </div>
                                     </div>
@@ -52,7 +53,7 @@
 
                                 <ul class="list-unstyled list-lg">
                                     <li><a href="#">Total Items <span
-                                                class="float-right badge badge-light round">{{ count($shopproducts) }}</span>
+                                                class="float-right badge badge-light round">{{ $statstic_data['total'] }}</span>
                                         </a></li>
 
                                 </ul>
@@ -68,15 +69,22 @@
                         </header>
                         <div class="filter-content collapse show" id="collapse33">
                             <div class="card-body">
-                                <input type="range" class="custom-range" min="0" max="100" name="">
+
+                                <input id="range_price" type="range" class="custom-range"
+                                    min="{{ $statstic_data['min_price'] }}" max="{{ $statstic_data['max_price'] }}"
+                                    name="">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Min</label>
-                                        <input class="form-control" placeholder="$0" type="number">
+                                        <input class="form-control" min="{{ $statstic_data['min_price'] }}"
+                                            placeholder="{{ $statstic_data['min_price'] }}" type="number" disabled>
                                     </div>
                                     <div class="form-group text-right col-md-6">
                                         <label>Max</label>
-                                        <input class="form-control" placeholder="$1,0000" type="number">
+                                        <input id="max_price" class="form-control"
+                                            min="{{ $statstic_data['min_price'] }}"
+                                            max="{{ $statstic_data['max_price'] }}"
+                                            placeholder="{{ $statstic_data['max_price'] }}" type="number">
                                     </div>
                                 </div> <!-- form-row.// -->
                                 <button class="btn btn-block btn-outline btn-secondary">Apply</button>
@@ -123,11 +131,11 @@
                 </div> <!-- card.// -->
             </aside> <!-- col.// -->
 
-            <main class="col-sm-9">
+            <main class="col-sm-9 posts endless-pagination" data-next-page="{{ $shop_products->nextPageUrl() }}">
 
-                @if (count($shopproducts) > 0)
-                @foreach ($shopproducts as $item)
-                <article id="shopdata" class="card card-product pb-0" style="height: 200px;">
+                @if (count($shop_products) > 0)
+                @foreach ($shop_products as $item)
+                <article id="shop_data" class="card card-product pb-0">
                     <div class="card-body">
 
                         <div class="row">
@@ -186,33 +194,11 @@
 
                                     <br>
                                     <p>
-                                        <a id="get-contact" href="#" class="btn btn-warning" value="{{ $item->id }}"
-                                            data-toggle="modal" data-target="#supplier_contact_model"> <i
-                                                class="fa fa-tty fa-lg"></i> </a>
+
                                         <a href="/product-detail/{{ $item->id }}" class="btn btn-secondary"> <i
                                                 class="fas fa-info fa-fw"></i></a>
                                     </p>
-                                    <div class="modal fade" id="supplier_contact_model" tabindex="-1" role="dialog"
-                                        aria-labelledby="modelTitleId" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Modal title</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <ul class="list-group">
 
-                                                        <li id="shopowner_name" class="list-group-item"></li>
-                                                        <li id="shopowner_email" class="list-group-item"></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <a href=""><i class="fa fa-heart"></i> Add to
                                         wishlist</a>
                                 </div> <!-- action-wrap.// -->
@@ -247,33 +233,270 @@
 <script>
     $.ajaxSetup({
         headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 
-    $("#get-contact").click(function (e) {
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////used for auto scrole////////////////////
+    ////////////////////////////////////////////////////////////////////
+    $(document).ready(function () {
+        $(window).scroll(fetchPosts);
 
-        let shopOwner = $(this).attr('value');
-        console.log("shop Owner ID " + shopOwner);
+        function fetchPosts() {
 
-        $.ajax({
-            type: "GET",
-            url: "http://shemach.test/shop-owner/" + shopOwner,
-            data: {
-                'shopOwner' : shopOwner,
+            let page = $('.endless-pagination').data('next-page');
+            if (page != null || page == '') {
+                clearTimeout($.data(this, "scrollCheck"));
+
+                $.data(this, "scrollCheck", setTimeout(function () {
+                    let scroll_position_for_posts_load = $(window).height() + $(window)
+                        .scrollTop() + 600;
+
+                    if (scroll_position_for_posts_load >= $(document).height()) {
+                        $.ajax({
+                            type: "GET",
+                            url: page
+                        }).done(function (response) {
+
+                            $('.posts').append(response.posts)
+                            $('.endless-pagination').data('next-page', response.next_page)
+                        }).fail(function (respons) {
+                            console.log(respons)
+                        });
+
+                    }
+
+                }, 1000))
             }
-
-        }).done(function (response) {
-            console.log('this is done');
-            console.log(response);
-            $('#shopowner_name').html(response.first_name +' '+ response.last_name);
-            $('#shopowner_email').html(response.email);
-        }).fail(function (response) {
-            console.log('this is fail');
-            console.log(response);
-         });
-
+        }
+    })
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////used for range price ////////////////////
+    ////////////////////////////////////////////////////////////////////
+    $('#range_price').change(function (e) {
+        let data = $("#range_price").val();
+        console.log(data);
+        changeMaxPrice(data);
     });
+
+    function changeMaxPrice(price) {
+        console.log('inside change' + price);
+        $('#max_price').val(price);
+    }
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////used for autocomplete ////////////////////
+    ////////////////////////////////////////////////////////////////////
+    $('#search').on('input', function () {
+
+        //setup before functions
+        let typingTimer; //timer identifier
+        let doneTypingInterval = 1000; //time in ms (5 seconds)
+        let myInput = document.getElementById('search');
+
+        myInput.addEventListener('keyup', () => {
+            clearTimeout(typingTimer);
+            if (myInput.value) {
+                typingTimer = setTimeout(function () {
+                    console.log('lemi' + $('#search').data('search-id'));
+                    $.ajax({
+                        type: "GET",
+                        url: 'http://shemach.test/autocomplete/' + $('#search').data(
+                            'search-id') + '/' + myInput.value,
+                        data: {
+                            'texttyped': myInput.value
+                        }
+                    }).done(function (response) {
+                        console.log(response);
+                        autocomplete(document.getElementById('search'), response);
+                    }).fail(function (response) {
+                        console.log(response);
+                    });
+                }, doneTypingInterval);
+            }
+        });
+
+    })
+    function autocomplete(inp, arr) {
+
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function (e) {
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            if (!val) {
+                return false;
+            }
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            this.parentNode.appendChild(a);
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching
+                           element:*/
+                    b = document.createElement("DIV"); /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" +
+                        arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that
+                           will hold the current array item's value:*/
+                    b.innerHTML += "<input id='hidden' type='hidden' value='" + arr[i] + "'>";
+                    /*execute
+                           a function when someone clicks on the item value (DIV element):*/
+                    b.addEventListener("click", function (e) {
+                        /*insert
+                               the value for the autocomplete text field:*/
+                               console.log(document.getElementById("hidden"));
+                        var impval = document.getElementById("hidden").value;
+                        $(".searchid").val(impval);
+                        inp.value = impval;
+                        /*close the
+                               list of autocompleted values, (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        }); /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown",
+            function (e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed, increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*andand make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode ==
+                    38) { //up /*If the arrow UP key is pressed,decrease the currentFocus variable: */
+                    currentFocus--; /* and make the current item more visible: */
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        /*and simulate a click on the "active" item:*/
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+
+        function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1); /*add class "autocomplete-active" :*/
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+
+        function removeActive(x) {
+            /*a function to removethe "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+
+        function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document, except the one passed as an argument:*/
+            var
+                x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] &&
+                    elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+        /*execute a function when someone clicks in thedocument:*/
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////used for searchbtn ////////////////////
+    ////////////////////////////////////////////////////////////////////
+
+   $('#searchbtn').click(function (e) {
+       console.log($(this).val())
+       let prouctname = $(this).val();
+       $.ajax({
+           type: "GET",
+           url: 'http://shemach.test/product/'+$('#search').data('search-id')+'/'+$(this).val(),
+           data: {"productname": prouctname}
+
+
+       }).done(function (respons) {
+           //console.log(respons);
+           $('.posts').empty();
+           $('.posts').append(respons.posts)
+        }).fail(function (respons) {
+            console.log(resons)
+         });
+    })
 
 </script>
+
+
+<style>
+    .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inherit;
+    }
+
+    input {
+        border: 1px solid transparent;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    input[type=text] {
+        background-color: #f1f1f1;
+        width: 100%;
+    }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+
+    .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border-bottom: 1px solid #d4d4d4;
+    }
+
+    .autocomplete-items div:hover {
+        /*when hovering an item:*/
+        background-color: #e9e9e9;
+    }
+
+    .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+</style>
 @endsection
