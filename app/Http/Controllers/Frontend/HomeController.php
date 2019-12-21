@@ -123,7 +123,7 @@ class HomeController extends Controller
         );
         $shop_products =  $this->productRepositery->getAutoComplete($shopid, $productname);
         $currentPage = Paginator::resolveCurrentPage() - 1;
-        $perPage = 2;
+        $perPage = 10;
         $currentPageSearchResults = $shop_products->slice($currentPage * $perPage, $perPage)->all();
         $shop_products = new LengthAwarePaginator($currentPageSearchResults, count($shop_products), $perPage);
 

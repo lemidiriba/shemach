@@ -87,7 +87,7 @@
                                             placeholder="{{ $statstic_data['max_price'] }}" type="number">
                                     </div>
                                 </div> <!-- form-row.// -->
-                                <button class="btn btn-block btn-outline btn-secondary">Apply</button>
+                                <button id="filterbtn" class="btn btn-block btn-outline btn-secondary">Apply</button>
                             </div> <!-- card-body.// -->
                         </div> <!-- collapse .// -->
                     </article> <!-- card-group-item.// -->
@@ -276,14 +276,12 @@
     ////////////////////////////////////////////////////////////////////
     $('#range_price').change(function (e) {
         let data = $("#range_price").val();
-        console.log(data);
-        changeMaxPrice(data);
+        $('#max_price').val(data);
+
     });
 
-    function changeMaxPrice(price) {
-        console.log('inside change' + price);
-        $('#max_price').val(price);
-    }
+
+
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////used for autocomplete ////////////////////
@@ -309,8 +307,23 @@
                         }
                     }).done(function (response) {
                         console.log(response);
-                        autocomplete(document.getElementById('search'), response);
+                        if (response) {
+                            autocomplete(document.getElementById('search'), response);
+                        } else {
+                            swal({
+                                title:"your here",
+                                button: false,
+                                timer: 2000
+                            })
+                        }
+
                     }).fail(function (response) {
+                        swal({
+                            title: "Opps Something went Wrong",
+                            icon: "error",
+                            button: false,
+                            timer: 2000
+                        })
                         console.log(response);
                     });
                 }, doneTypingInterval);
@@ -318,6 +331,7 @@
         });
 
     })
+
     function autocomplete(inp, arr) {
 
         /*the autocomplete function takes two arguments,
@@ -351,17 +365,14 @@
                     /*insert a input field that
                            will hold the current array item's value:*/
                     b.innerHTML += "<input id='hidden' type='hidden' value='" + arr[i] + "'>";
-                    /*execute
-                           a function when someone clicks on the item value (DIV element):*/
+                    /*execute a function when someone clicks on the item value (DIV element):*/
                     b.addEventListener("click", function (e) {
-                        /*insert
-                               the value for the autocomplete text field:*/
-                               console.log(document.getElementById("hidden"));
+                        /*insert the value for the autocomplete text field:*/
+                        console.log(document.getElementById("hidden"));
                         var impval = document.getElementById("hidden").value;
                         $(".searchid").val(impval);
                         inp.value = impval;
-                        /*close the
-                               list of autocompleted values, (or any other open lists of autocompleted values:*/
+                        /*close the list of autocompleted values, (or any other open lists of autocompleted values:*/
                         closeAllLists();
                     });
                     a.appendChild(b);
@@ -377,8 +388,8 @@
                     currentFocus++;
                     /*andand make the current item more visible:*/
                     addActive(x);
-                } else if (e.keyCode ==
-                    38) { //up /*If the arrow UP key is pressed,decrease the currentFocus variable: */
+                } else if (e.keyCode == 38) {
+                    //up /*If the arrow UP key is pressed,decrease the currentFocus variable: */
                     currentFocus--; /* and make the current item more visible: */
                     addActive(x);
                 } else if (e.keyCode == 13) {
@@ -429,37 +440,75 @@
     ////////////////////////////used for searchbtn ////////////////////
     ////////////////////////////////////////////////////////////////////
 
-   $('#searchbtn').click(function (e) {
-       console.log($(this).val())
-       let prouctname = $(this).val();
-       $.ajax({
-           type: "GET",
-           url: 'http://shemach.test/single-product/'+$('#search').data('search-id')+'/'+$(this).val(),
-           data: {"productname": prouctname}
+    $('#searchbtn').click(function (e) {
+        console.log($("#search").val())
+        let prouctname = $("#search").val();
+        $.ajax({
+            type: "GET",
+            url: 'http://shemach.test/single-product/' + $('#search').data('search-id') + '/' + prouctname,
+            data: {
+                "productname": prouctname
+            }
 
 
-       }).done(function (respons) {
+        }).done(function (respons) {
            //console.log(respons);
-           $('.posts').empty();
-           $('.posts').append(respons.posts)
+            if (respons.posts.trim() != "") {
+                $('.posts').empty();
+                $('.posts').append(respons.posts)
+            } else {
+                swal({
+                title: "Opps!! didn\'t find Any thing",
+                icon: "info",
+                button:false,
+                timer: 2000
+                })
+            }
         }).fail(function (respons) {
+            swal({
+                title: "Opps Something went Wrong",
+                icon: "error",
+                button: false,
+                timer: 2000
+            })
             console.log(respons)
-         });
+        });
     })
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////used for searchbtn price rage///////////
     ////////////////////////////////////////////////////////////////////
 
-    $('#serchrangeprice').on('input', function (e) {
-        let scrollingtimer;
-        let donescrollinginterval = 500;
-        let myscrollrange = $('#scrollrange');
+    $("#filterbtn").click(function (e) {
+        let max_price = $("#");
+        let min_price = $("#");
 
-        myscrollrange.addEventListener('',() => {
-            //
-         });
-    })
+        $.ajax({
+            type: "GET",
+            url: "",
+            data: {
+                'max_price': max_price,
+                'min_price': min_price
+            },
+        }).done(function (response) {
+            console.log(response.post);
+            // if (condition) {
+
+            // } else {
+
+            // }
+            $('.posts').empty();
+            $('.posts').append(respons.posts)
+        }).fail(function (response) {
+            swal({
+                title: "Opps Something went Wrong",
+                icon: "error",
+                button: false,
+                timer: 2000
+            })
+        });
+
+    });
 
 </script>
 
