@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/oneshop/{id}', [HomeController::class, 'specificShop'])->name('oneshop');
 Route::get('/autocomplete/{shopid}/{text}', [HomeController::class, 'getAutoCompleteList'])->name('autocomplete');
-Route::get('/product/{shopid}/{text}', [HomeController::class, 'getProductByName'])->name('ProductByName');
+Route::get('/single-product/{shopid}/{text}', [HomeController::class, 'getProductByName'])->name('ProductByName');
 
 
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
@@ -35,44 +35,64 @@ Route::get('/shop/location/all', [HomeController::class, 'getShopLocation'])->na
  * All route names are prefixed with 'frontend.'
  * These routes can not be hit if the password is expired
  */
-Route::group(['middleware' => ['auth', 'password_expires']], function () {
-    Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
-        // User Dashboard Specific
-        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::group(
+    ['middleware' => ['auth', 'password_expires']],
+    function () {
+        Route::group(
+            ['namespace' => 'User', 'as' => 'user.'],
+            function () {
+                // User Dashboard Specific
+                Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        // User Account Specific
-        Route::get('account', [AccountController::class, 'index'])->name('account');
+                // User Account Specific
+                Route::get('account', [AccountController::class, 'index'])->name('account');
 
-        // User Profile Specific
-        Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    });
-});
+                // User Profile Specific
+                Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+            }
+        );
+    }
+);
 
 //shop route
-Route::group(['middleware' => ['auth', 'password_expires']], function () {
-    Route::group(['namespace' => 'Shop'], function () {
-        //shop
-        Route::resource('shop', 'ShopController');
-        Route::resource('shopcategory', 'ShopCategoryController');
-        Route::resource('geolocation', 'ShopLocationController');
-        Route::resource('shopowner', 'ShopOwnerController');
+Route::group(
+    ['middleware' => ['auth', 'password_expires']],
+    function () {
+        Route::group(
+            ['namespace' => 'Shop'],
+            function () {
+                //shop
+                Route::resource('shop', 'ShopController');
+                Route::resource('shopcategory', 'ShopCategoryController');
+                Route::resource('geolocation', 'ShopLocationController');
+                Route::resource('shopowner', 'ShopOwnerController');
 
 
-        //added route to resource Controller
-        /////////////////////////////////////////////////
-        //add to ShopController
-        Route::post('shop/location', [ShopController::class, 'addLocation'])->name('addLocation');
+                //added route to resource Controller
+                /////////////////////////////////////////////////
+                //add to ShopController
+                Route::post('shop/location', [ShopController::class, 'addLocation'])->name('addLocation');
 
-        //added to shop owner controller
-    });
-});
+                //added to shop owner controller
+            }
+        );
+    }
+);
 
-Route::group(['middleware' => ['auth', 'password_expires']], function () {
-    Route::group(['namespace' => 'Product'], function () {
+Route::group(
+    ['middleware' => ['auth', 'password_expires']],
+    function () {
+        Route::group(
+            ['namespace' => 'Product'],
+            function () {
 
-        Route::resource('product', 'ProductController');
-        Route::delete('product/delete/{id}', [ProductController::class, 'destroy'])->name('deleteProduct');
-        Route::get('product/detail/{id}', ['uses' => 'ProductController@detail'])->name('productDetail');
-        Route::patch('product/update/{id}', [ProductController::class, 'update'])->name('productUpdate');
-    });
-});
+                Route::resource('product', 'ProductController');
+                Route::delete('product/delete/{id}', [ProductController::class, 'destroy'])->name('deleteProduct');
+                //Route::get('product/detail/{id}', ['uses' => 'ProductController@detail'])->name('productDetail');
+                Route::get('product/detail/{id}', [ProductController::class, 'detail'])->name('productDetail');
+
+                Route::patch('product/update/{id}', [ProductController::class, 'update'])->name('productUpdate');
+            }
+        );
+    }
+);

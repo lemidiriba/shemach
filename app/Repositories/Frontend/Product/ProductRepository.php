@@ -38,7 +38,7 @@ class ProductRepository extends BaseRepository
 
 
     /**
-     * AutoComplet function
+     * AutoComplete function  sd
      *
      * @param string $text
      * @return json

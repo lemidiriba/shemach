@@ -434,7 +434,7 @@
        let prouctname = $(this).val();
        $.ajax({
            type: "GET",
-           url: 'http://shemach.test/product/'+$('#search').data('search-id')+'/'+$(this).val(),
+           url: 'http://shemach.test/singel-product/'+$('#search').data('search-id')+'/'+$(this).val(),
            data: {"productname": prouctname}
 
 
@@ -444,6 +444,20 @@
            $('.posts').append(respons.posts)
         }).fail(function (respons) {
             console.log(resons)
+         });
+    })
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////used for searchbtn price rage///////////
+    ////////////////////////////////////////////////////////////////////
+
+    $('#serchrangeprice').on('input', function (e) {
+        let scrollingtimer;
+        let donescrollinginterval = 500;
+        let myscrollrange = $('#scrollrange');
+
+        myscrollrange.addEventListener('',() => {
+            //
          });
     })
 

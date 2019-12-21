@@ -28,7 +28,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { }
+    {
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -97,20 +98,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $shop_id
      * @return \Illuminate\Http\Response
      */
     public function show($shop_id)
     {
-        //return 'show';
-        $product_list = $this->productRepository->getByShop($shop_id);
+        $product_list = $this->shopRepository->getById($shop_id)->product;
         $shop_name = $this->shopRepository->getByColumn($shop_id, 'id');
 
         return view('frontend.user.shopproductlist')
-            ->with([
-                'product_lists' => $product_list,
-                'shop' => $shop_name,
-            ]);
+            ->with(
+                [
+                    'product_lists' => $product_list,
+                    'shop' => $shop_name,
+                ]
+            );
     }
 
     /**
@@ -160,6 +162,7 @@ class ProductController extends Controller
      */
     public function detail($id)
     {
+        //return 'here';
         $product = $this->productRepository->getById($id);
         return $product;
     }

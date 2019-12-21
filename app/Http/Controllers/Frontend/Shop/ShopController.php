@@ -18,11 +18,11 @@ use Illuminate\Support\Facades\Auth;
  */
 class ShopController extends Controller
 {
-    protected $_shopRepository;
-    protected $_shopLocationRepository;
+    protected $shopRepository;
+    protected $shopLocationRepository;
     //modal
-    protected $_shopLocation;
-    protected $_shopModel;
+    protected $shopLocation;
+    protected $shopModel;
 
     /**
      * Construct function.
@@ -54,7 +54,8 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    { }
+    {
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -66,12 +67,15 @@ class ShopController extends Controller
     public function store(Request $request)
     {
         //return $request->file('image_file');
-        $this->validate($request, [
-            'shop_name' => ['required', 'unique:shops,shop_name', 'string', 'min:3', 'max:100'],
-            'shop_category' => 'required',
-            'Shop_description' => ['required', 'string'],
-            'image_file' => ['image', 'mimes:jpeg,jpg,png,gif', 'max:20000'],
-        ]);
+        $this->validate(
+            $request,
+            [
+                'shop_name' => ['required', 'unique:shops,shop_name', 'string', 'min:3', 'max:100'],
+                'shop_category' => 'required',
+                'Shop_description' => ['required', 'string'],
+                'image_file' => ['image', 'mimes:jpeg,jpg,png,gif', 'max:20000'],
+            ]
+        );
 
         if ($request->hasFile('image_file')) {
             $filenamewithext = $request->file('image_file')->getClientOriginalName();
@@ -109,7 +113,8 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { }
+    {
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -119,7 +124,8 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    { }
+    {
+    }
 
     /**
      * Update the specified resource in storage.
@@ -130,7 +136,8 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    { }
+    {
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -140,7 +147,7 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    { 
+    {
         return $id;
     }
 
@@ -148,14 +155,19 @@ class ShopController extends Controller
      * AddLocation function.
      *
      * @param Request $request
+     *
+     * @return String
      */
     public function addLocation(Request $request)
     {
-        $this->validate($request, [
-            'lat' => ['required', 'numeric'],
-            'lng' => ['required', 'numeric'],
-            'shop_id' => ['required', 'integer'],
-        ]);
+        $this->validate(
+            $request,
+            [
+                'lat' => ['required', 'numeric'],
+                'lng' => ['required', 'numeric'],
+                'shop_id' => ['required', 'integer'],
+            ]
+        );
         //check if location exist
         //then add location or update location
         $shopExist = $this->shopLocationRepository->where('Shop_id', $request->shop_id)->get();

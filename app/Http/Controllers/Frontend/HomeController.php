@@ -115,12 +115,13 @@ class HomeController extends Controller
      */
     public function getProductByName(Request $request, $shopid, $productname)
     {
+
         $price = $this->shopRepository->getById($shopid)->product();
         $statstic_data = array(
             'max_price' => $price->max('price'),
             'min_price' => $price->min('price')
         );
-        $shop_products =  $this->productRepositery->getAutoComplete($shopid, $productname);
+        return $shop_products =  $this->productRepositery->getAutoComplete($shopid, $productname);
         $currentPage = Paginator::resolveCurrentPage() - 1;
         $perPage = 2;
         $currentPageSearchResults = $shop_products->slice($currentPage * $perPage, $perPage)->all();
