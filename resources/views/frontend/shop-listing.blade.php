@@ -434,7 +434,7 @@
        let prouctname = $(this).val();
        $.ajax({
            type: "GET",
-           url: 'http://shemach.test/singel-product/'+$('#search').data('search-id')+'/'+$(this).val(),
+           url: 'http://shemach.test/single-product/'+$('#search').data('search-id')+'/'+$(this).val(),
            data: {"productname": prouctname}
 
 
@@ -443,7 +443,7 @@
            $('.posts').empty();
            $('.posts').append(respons.posts)
         }).fail(function (respons) {
-            console.log(resons)
+            console.log(respons)
          });
     })
 

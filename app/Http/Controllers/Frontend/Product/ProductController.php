@@ -130,23 +130,26 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * 
      * @param  int  $id
+     * 
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        return 'update';
+        return $request;
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * 
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //return 'destroy '.$id;
+        //return 'destroy ' . $id;
         $product = Product::find($id);
         $product->delete();
         return response(['message' => 'Product deleted', 'status' => 'success']);

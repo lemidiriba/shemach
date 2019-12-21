@@ -301,9 +301,9 @@
                             <form id="addShop" action="" method="POST" role="form" enctype="multipart/form-data">
                                 <!--hidden filed -->
                                 <input name="shop" type="hidden" value="{{ $shop->id }}">
+                                @method("PUT")
 
-
-                                {{ csrf_field() }}
+                                @csrf
                                 <div class="form-group">
 
                                     <input id="product_name" name="product_name" type="text"
@@ -368,290 +368,292 @@
         $.ajaxSetup({
 
             headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
-    ////////////////////////////////////////////////////////////
-    ////////////////////Shop item Delete////////////////////////////
-    ////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////
+        ////////////////////Shop item Delete////////////////////////////
+        ////////////////////////////////////////////////////////////
 
-    $('.delete_product').click(function (e) {
-        e.preventDefault();
+        $('.delete_product').click(function (e) {
+            e.preventDefault();
 
-        console.log('Delete pressed');
-        console.log($(this).attr('value'));
-        let productid = $(this).val();
-
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this file!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            })
-            .then((willDelete) => {
-            if (willDelete) {
-
-               deleteProduct(productid);
-
-
-            }
-        });
-
-
-
-
-
-    });
-
-    function deleteProduct(productID){
-        console.log(productID);
-
-        $.ajax({
-                    url: "http://shemach.test/product/delete/"+productID,
-                    type: 'DELETE',
-                    data: {
-                        "productID": productID,
-                    },
-                }).done(
-                    function(result) {
-                        console.log(result);
-                            swal("Poof! Your file has been deleted!", {
-                                icon: "success",
-                            });
-                            setTimeout(function(){
-                                window.location.reload();
-                            },3000);
-
-                    }
-                ).fail(
-                    function (response) {
-                        console.log(response);
-                        //window.open(response, '_blank')
-                        swal({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-                        })
-                    }
-                )
-    }
-
-
-
-    ////////////////////////////////////////////////////////////
-    ////////////////////Shop item Update////////////////////////////
-    ////////////////////////////////////////////////////////////
-
-    //updating  product in a shop
-    $(".product_detail").click(function (e) {
-
-        let product_id = $(this).attr('value');
-        console.log(product_id);
-
-        $.ajax({
-            type: "GET",
-            url:'http://shemach.test/product/detail/'+ product_id,
-            data:{
-                'product_id': product_id
-            }
-
-        }).done(
-            function (response) {
-                console.log('here');
-                console.log(response);
-
-                //alert( "second success" );
-                $('#name').html(response.product_name);
-                $('#amount').html(response.product_amount);
-                $('#price').html(response.price);
-                $('#product_detail').html(response.product_detail_id);
-                $('#product_type').html(response.product_type_id);
-                $('#vender_detail').html(response.product_vender_id);
-
-                $('#product_info').modal('show');
-            }
-        ).fail(
-            function (response) {
-                console.log(response);
-            }
-        );
-    });
-
-
-
-    ////////////////////////////////////////////////////////////
-    ////////////////////Shop Product////////////////////////////
-    ////////////////////////////////////////////////////////////
-    //saving product in shop
-            $("#add_product").click(function(e){
-                e.preventDefault();
-                let form = $('#addShop')[0];
-                let addProductFormData = new FormData(form);
-
-                $.ajax({
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    url:'http://shemach.test/product',
-                    data: addProductFormData,
-                    cache: false,
-                    contentType: false,
-                    processData: false
-
-                }).done(
-                    function (response) {
-                        $('#addshopproduct').modal('hide');
-                            swal({
-                                icon: 'success',
-                                title: 'Product Adderd successfully',
-                                toast: true,
-                                position: 'top-end',
-                                button: false,
-                                timer: 2000,
-                                timerProgressBar: true,
-                                onOpen: (toast) => {
-                                toast.addEventListener('mouseenter', swal.stopTimer)
-                                toast.addEventListener('mouseleave', swal.resumeTimer)
-                                }
-                            })
-
-                            console.log(response);
-                            //alert( "second success" );
-                            setTimeout(function(){
-                                window.location.reload();
-                            },3000);
-
-                    }
-
-                ).fail(
-                    function (response) {
-
-                        swal({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-
-                        })
-                        console.log(response);
-                    }
-                );
-
-            });
-
-
-            //deleteing product in shop
-
-
-
-             ////////////////////////////////////////////////////////////
-    ////////////////////Shop Location////////////////////////////
-    ////////////////////////////////////////////////////////////
-    $('#add_location').click(function (e) {
-
-        e.preventDefault();
-
-        console.log('add location clicked');
-
-        let form = $('#addLocation')[0];
-        let locationFormData = new FormData(form);
-        console.log(locationFormData);
-        $.ajax({
-            type: "POST",
-            url: 'http://shemach.test/shop/location',
-            data: locationFormData,
-            cache: false,
-            contentType: false,
-            processData: false
-        }).done(
-            function (response) {
-            console.log(response);
-            $('#exampleModal').modal('hide');
-
+            console.log('Delete pressed');
+            console.log($(this).attr('value'));
+            let productid = $(this).val();
 
             swal({
-                icon: 'success',
-                title: response.message,
-                toast: true,
-                button: false,
-                timer: 2000,
-                timerProgressBar: true,
-            })
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        deleteProduct(productid);
+
+
+                    }
+                });
+
+
+
+
+
+        });
+
+        function deleteProduct(productID) {
+            console.log(productID);
+
+            $.ajax({
+                url: "http://shemach.test/product/delete/" + productID,
+                type: 'DELETE',
+                data: {
+                    "productID": productID,
+                },
+            }).done(
+                function (result) {
+                    console.log(result);
+                    swal("Poof! Your file has been deleted!", {
+                        icon: "success",
+                    });
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 3000);
+
+                }
+            ).fail(
+                function (response) {
+                    console.log(response);
+                    //window.open(response, '_blank')
+                    swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }
+            )
         }
-        ).fail(
-            function(response) {
-                console.log(response.responseJSON);
-                //$('#exampleModal').modal('hide');
+
+
+
+        ////////////////////////////////////////////////////////////
+        ////////////////////Shop item Update////////////////////////////
+        ////////////////////////////////////////////////////////////
+
+        //updating  product in a shop
+        $(".product_detail").click(function (e) {
+
+            let product_id = $(this).attr('value');
+            console.log(product_id);
+
+            $.ajax({
+                type: "GET",
+                url: 'http://shemach.test/product/detail/' + product_id,
+                data: {
+                    'product_id': product_id
+                }
+
+            }).done(
+                function (response) {
+                    console.log('here');
+                    console.log(response);
+
+                    //alert( "second success" );
+                    $('#name').html(response.product_name);
+                    $('#amount').html(response.product_amount);
+                    $('#price').html(response.price);
+                    $('#product_detail').html(response.product_detail_id);
+                    $('#product_type').html(response.product_type_id);
+                    $('#vender_detail').html(response.product_vender_id);
+
+                    $('#product_info').modal('show');
+                }
+            ).fail(
+                function (response) {
+                    console.log(response);
+                }
+            );
+        });
+
+
+
+        ////////////////////////////////////////////////////////////
+        ////////////////////Shop Product////////////////////////////
+        ////////////////////////////////////////////////////////////
+        //saving product in shop
+        $("#add_product").click(function (e) {
+            e.preventDefault();
+            let form = $('#addShop')[0];
+            let addProductFormData = new FormData(form);
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: 'http://shemach.test/product',
+                data: addProductFormData,
+                cache: false,
+                contentType: false,
+                processData: false
+
+            }).done(
+                function (response) {
+                    $('#addshopproduct').modal('hide');
+                    swal({
+                        icon: 'success',
+                        title: 'Product Adderd successfully',
+                        toast: true,
+                        position: 'top-end',
+                        button: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        onOpen: (toast) => {
+                            toast.addEventListener('mouseenter', swal.stopTimer)
+                            toast.addEventListener('mouseleave', swal.resumeTimer)
+                        }
+                    })
+
+                    console.log(response);
+                    //alert( "second success" );
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 3000);
+
+                }
+
+            ).fail(
+                function (response) {
+
+                    swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+
+                    })
+                    console.log(response);
+                }
+            );
+
+        });
+
+
+        //deleteing product in shop
+
+
+
+        ////////////////////////////////////////////////////////////
+        ////////////////////Shop Location////////////////////////////
+        ////////////////////////////////////////////////////////////
+        $('#add_location').click(function (e) {
+
+            e.preventDefault();
+
+            console.log('add location clicked');
+
+            let form = $('#addLocation')[0];
+            let locationFormData = new FormData(form);
+            console.log(locationFormData);
+            $.ajax({
+                type: "POST",
+                url: 'http://shemach.test/shop/location',
+                data: locationFormData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done(
+                function (response) {
+                    console.log(response);
+                    $('#exampleModal').modal('hide');
+
+
+                    swal({
+                        icon: 'success',
+                        title: response.message,
+                        toast: true,
+                        button: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                    })
+                }
+            ).fail(
+                function (response) {
+                    console.log(response.responseJSON);
+                    //$('#exampleModal').modal('hide');
                     swal({
                         icon: 'error',
                         title: response.responseJSON.message,
                     })
-            }
-        );
-    });
+                }
+            );
+        });
 
 
-    ///// update_product///
+        ///// update_product///
 
 
-    $('.update_productbtn').click(function (e) {
-        console.log('update_product clicked');
-        e.preventDefault();
+        $('.update_productbtn').click(function (e) {
+            console.log('update_product clicked');
+            e.preventDefault();
 
-        //geting clicked id
-        let proudct_id =  $(this).attr("value");
-        console.log('id ' + proudct_id );
-        $.ajax({
-            type: "GET",
-            url: "http://shemach.test/product/detail/"+ proudct_id,
-            data: {'product_id' : proudct_id},
-
-
-        }).done(function (response) {
-            console.log(response);
-            //window.open(response,'_blank')
-
-            // adding previous result
-            $('#product_name').val(response.product_name);
-            $('#product_price').val(response.price);
-            $('#product_amount').val(response.product_amount);
-            $('#product_name').val(response.product_name);
-            $('#product_name').val(response.product_name);
-            $('#updateproductshop').attr('value', response.id);
+            //geting clicked id
+            let proudct_id = $(this).attr("value");
+            console.log('id ' + proudct_id);
+            $.ajax({
+                type: "GET",
+                url: "http://shemach.test/product/detail/" + proudct_id,
+                data: {
+                    'product_id': proudct_id
+                },
 
 
-         }).fail(function (response) {
-            console.log(response);
-          });
+            }).done(function (response) {
+                console.log(response);
+                //window.open(response,'_blank')
 
-        //geting product detail
+                // adding previous result
+                $('#product_name').val(response.product_name);
+                $('#product_price').val(response.price);
+                $('#product_amount').val(response.product_amount);
+                $('#product_name').val(response.product_name);
+                $('#product_name').val(response.product_name);
+                $('#updateproductshop').attr('value', response.id);
 
-    });
-/////////////////////if update pressed///////////////
-    $('#updateproductshop').click(function (e) {
-        console.log('update pressed');
-        let product_id = $(this).attr('value');
-        // console.log("product id is " + product_id);
 
-        // console.log($('#addShop')[0])
-        // let form = $('#addShop')[0];
-        // let localupdate = new FormData(form);
+            }).fail(function (response) {
+                console.log(response);
+            });
 
-        // $.ajax({
-        //     type: "POST",
-        //     url: "http://shemach.test/product/update/"+ product_id,
-        //     data: localupdate,
-        //     catch:false,
-        //     contentType: false,
-        //     processData: false
+            //geting product detail
 
-        // }).done(function (response) {
-        //     console.log(response);
-        // }).fail(function (response) {
-        //     console.log(response);
-        // });
+        });
+        /////////////////////if update pressed///////////////
+        $('#updateproductshop').click(function (e) {
+            console.log('update pressed');
+            let product_id = $(this).attr('value');
+            // console.log("product id is " + product_id);
 
-     });
+            // console.log($('#addShop')[0])
+            // let form = $('#addShop')[0];
+            // let localupdate = new FormData(form);
+
+            // $.ajax({
+            //     type: "POST",
+            //     url: "http://shemach.test/product/update/"+ product_id,
+            //     data: localupdate,
+            //     catch:false,
+            //     contentType: false,
+            //     processData: false
+
+            // }).done(function (response) {
+            //     console.log(response);
+            // }).fail(function (response) {
+            //     console.log(response);
+            // });
+
+        });
 
     </script>
 </div>

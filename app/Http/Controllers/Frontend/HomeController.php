@@ -121,7 +121,7 @@ class HomeController extends Controller
             'max_price' => $price->max('price'),
             'min_price' => $price->min('price')
         );
-        return $shop_products =  $this->productRepositery->getAutoComplete($shopid, $productname);
+        $shop_products =  $this->productRepositery->getAutoComplete($shopid, $productname);
         $currentPage = Paginator::resolveCurrentPage() - 1;
         $perPage = 2;
         $currentPageSearchResults = $shop_products->slice($currentPage * $perPage, $perPage)->all();
