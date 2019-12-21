@@ -5,6 +5,7 @@ namespace App\Repositories\Frontend\Product;
 use App\Models\Product;
 use App\Repositories\BaseRepository;
 
+
 /**
  * Used to get shop data
  *
@@ -49,5 +50,20 @@ class ProductRepository extends BaseRepository
             ->where('shop_id', $shop_id)
             ->where("product_name", "%{$text}%", "LIKE")
             ->get();
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Int $shop_id
+     * @param Int $max_price
+     * @param Int $min_price
+     * @return void
+     */
+    public function getBetweenPrice($shop_id, $max_price, $min_price)
+    {
+        return $data =  $this
+            ->where('shop_id', $shop_id)
+            ->get()->whereBetween('price', [$min_price, $max_price]);
     }
 }

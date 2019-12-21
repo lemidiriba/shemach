@@ -21,7 +21,7 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/oneshop/{id}', [HomeController::class, 'specificShop'])->name('oneshop');
 Route::get('/autocomplete/{shopid}/{text}', [HomeController::class, 'getAutoCompleteList'])->name('autocomplete');
 Route::get('/single-product/{shopid}/{text}', [HomeController::class, 'getProductByName'])->name('ProductByName');
-
+Route::get('/shop/price/{id}/{min}/{max}', [HomeController::class, 'getPriceRange'])->name('getpricerage');
 
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');

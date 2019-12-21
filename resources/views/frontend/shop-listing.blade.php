@@ -480,26 +480,26 @@
     ////////////////////////////////////////////////////////////////////
 
     $("#filterbtn").click(function (e) {
-        let max_price = $("#");
-        let min_price = $("#");
-
+        let max_price = $("#max_price").val();
+        let min_price = $("#min_price").val();
+        console.log(max_price);
         $.ajax({
             type: "GET",
-            url: "",
+            url: "http://shemach.test/shop/price/"+$('#search').data('search-id')+'/'+min_price+'/'+max_price,
             data: {
+                'shop_id': $('#search').data('search-id'),
                 'max_price': max_price,
                 'min_price': min_price
-            },
+            }
         }).done(function (response) {
-            console.log(response.post);
-            // if (condition) {
+            console.log(response.posts);
+            if (response.posts.trim() != "") {
+                $('.posts').empty();
+                $('.posts').append(response.posts)
+            }
 
-            // } else {
-
-            // }
-            $('.posts').empty();
-            $('.posts').append(respons.posts)
         }).fail(function (response) {
+            console.log(response);
             swal({
                 title: "Opps Something went Wrong",
                 icon: "error",

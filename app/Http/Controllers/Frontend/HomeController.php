@@ -135,4 +135,35 @@ class HomeController extends Controller
             ];
         }
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @param Int $shopid
+     * @param Int $minprice
+     * @param Int $maxprice
+     * @return void
+     */
+    public function getPriceRange(Request $request, $shopid, $minprice, $maxprice)
+    {
+        //return $shopid;
+        $price = $this->shopRepository->getById($shopid)->product();
+        $statstic_data = array(
+            'max_price' => $price->max('price'),
+            'min_price' => $price->min('price')
+        );
+        $shop_data = $this->shopRepository->getById($shopid);
+        $shop_products = $this->productRepositery->getBetweenPrice($shopid, $maxprice, $minprice);
+        $currentPage = Paginator::resolveCurrentPage() - 1;
+        $perPage = 10;
+        $currentPageSearchResults = $shop_products->slice($currentPage * $perPage, $perPage)->all();
+        $shop_products = new LengthAwarePaginator($currentPageSearchResults, count($shop_products), $perPage);
+
+
+        return [
+            'posts' => view('frontend.ajax.shop-product-list')->with(compact('shop_data', 'shop_products', 'statstic_data'))->render(),
+            'next_page' => $shop_products->nextPageUrl()
+        ];
+    }
 }
