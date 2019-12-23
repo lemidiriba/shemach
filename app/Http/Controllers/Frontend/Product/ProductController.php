@@ -130,21 +130,34 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * 
+     *
      * @param  int  $id
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        return $request;
+        $this->validate(
+            $request,
+            [
+                'product_name' => ['required', 'string', 'max:191'],
+                'product_type' => ['required', 'integer'],
+                'product_brand' => ['required', 'integer'],
+                'product_price' => ['required', 'numeric', 'min:1'],
+                'image_file' => ['image', 'mimes:jpeg,jpg,png,gif', 'max:20000'],
+                'product_amount' => ['required', 'numeric', 'min:1'],
+
+            ]
+        );
+        //return 'update is here';
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

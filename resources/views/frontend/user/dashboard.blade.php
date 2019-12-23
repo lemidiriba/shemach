@@ -166,13 +166,14 @@
 
                                         <ul class="list-group list-group-unbordered mb-3">
                                             <li class="list-group-item">
-                                                <b>Total Product</b> <a class="float-right">1,322</a>
+                                                <b>Total Product</b> <a
+                                                    class="float-right">{{ count($shop->product) }}</a>
                                             </li>
                                             <li class="list-group-item">
-                                                <b>Currunt</b> <a class="float-right">543</a>
+                                                <b>Currunt</b> <a class="float-right">T543</a>
                                             </li>
                                             <li class="list-group-item">
-                                                <b>Moved Out</b> <a class="float-right">13,287</a>
+                                                <b>Moved Out</b> <a class="float-right">T13,287</a>
                                             </li>
                                         </ul>
 

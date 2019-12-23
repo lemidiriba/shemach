@@ -239,14 +239,71 @@
                                     </div>
                                     <div class="modal-body">
                                         <ul class="list-group list-group-flush">
-                                            <li id="name" class="list-group-item"></li>
-                                            <li id="amount" class="list-group-item"></li>
-                                            <li id="price" class="list-group-item"></li>
-                                            <li id="product_detail" class="list-group-item"></li>
-                                            <li id="product_type" class="list-group-item"></li>
-                                            <li id="vender_detail" class="list-group-item"></li>
-                                            <li id="shop_name" class="list-group-item">{{ $shop->shop_name }}</li>
-                                            <li id="" class="list-group-item"></li>
+                                            <div class="row">
+
+                                                <div class="col-4"><label class="list-group-item" for="name">Product
+                                                        Name</label>
+                                                </div>
+
+                                                <div class="col-8">
+                                                    <li id="name" class="list-group-item"></li>
+                                                </div>
+
+
+                                                <div class="col-4"><label class="list-group-item" for="amount">Product
+                                                        Amount</label></div>
+
+                                                <div class="col-8">
+                                                    <li id="amount" class="list-group-item"></li>
+                                                </div>
+
+
+                                                <div class="col-4"><label class="list-group-item"
+                                                        for="price">Price</label>
+                                                </div>
+
+                                                <div class="col-8">
+                                                    <li id="price" class="list-group-item"></li>
+                                                </div>
+
+
+                                                <div class="col-4"><label class="list-group-item"
+                                                        for="product_detail">Product
+                                                        Detail</label></div>
+
+                                                <div class="col-8">
+                                                    <li id="product_detail" class="list-group-item"></li>
+                                                </div>
+
+
+                                                <div class="col-4"><label class="list-group-item"
+                                                        for="product_type">Product
+                                                        Type</label></div>
+
+                                                <div class="col-8">
+                                                    <li id="product_type" class="list-group-item"></li>
+                                                </div>
+
+
+                                                <div class="col-4"><label class="list-group-item"
+                                                        for="vender_detail">Vender
+                                                        Detail</label></div>
+
+                                                <div class="col-8">
+                                                    <li id="vender_detail" class="list-group-item"></li>
+                                                </div>
+
+
+                                                <div class="col-4"><label class="list-group-item" for="shop_name">Shop
+                                                        Name</label>
+                                                </div>
+
+                                                <div class="col-8">
+                                                    <li id="shop_name" class="list-group-item">{{ $shop->shop_name }}
+                                                    </li>
+                                                </div>
+
+                                            </div>
                                         </ul>
                                     </div>
 
@@ -258,7 +315,7 @@
 
 
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-sm-12 col-md-7">
                     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
                         <ul class="pagination">
@@ -272,7 +329,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         @else
@@ -296,14 +353,18 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body mx-3">
-                        <div class="is-valid">
-                            <form id="addShop" action="" method="POST" role="form" enctype="multipart/form-data">
-                                <!--hidden filed -->
-                                <input name="shop" type="hidden" value="{{ $shop->id }}">
-                                @method("PUT")
+                    <form id="update_product" role="form" action="" method="POST" enctype="multipart/form-data">
+
+                        <div class="modal-body mx-3">
+
+                            <div class="is-valid">
+
+                                @method("PATCH")
 
                                 @csrf
+                                <!--hidden filed -->
+                                <input id="product_id" type="hidden" value="">
+
                                 <div class="form-group">
 
                                     <input id="product_name" name="product_name" type="text"
@@ -345,16 +406,16 @@
                                         id="inputEmail3" placeholder="">
                                 </div>
 
-
+                            </div>
 
                         </div>
-
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center bg-warning">
-                        <button id="updateproductshop" type="submit" class="btn btn-default ">Update Product</button>
-                    </div>
+                        <div class="modal-footer d-flex justify-content-center bg-warning">
+                            <button id="updateproductshop" type="submit" class="btn btn-default ">Update
+                                Product</button>
+                        </div>
+                    </form>
                 </div>
-                </form>
+
             </div>
 
 
@@ -463,13 +524,13 @@
                     console.log(response);
 
                     //alert( "second success" );
+                    $('#product_id').html(response.id)
                     $('#name').html(response.product_name);
                     $('#amount').html(response.product_amount);
                     $('#price').html(response.price);
                     $('#product_detail').html(response.product_detail_id);
                     $('#product_type').html(response.product_type_id);
                     $('#vender_detail').html(response.product_vender_id);
-
                     $('#product_info').modal('show');
                 }
             ).fail(
@@ -504,7 +565,7 @@
                     $('#addshopproduct').modal('hide');
                     swal({
                         icon: 'success',
-                        title: 'Product Adderd successfully',
+                        title: 'Product Added successfully',
                         toast: true,
                         position: 'top-end',
                         button: false,
@@ -607,13 +668,12 @@
                 data: {
                     'product_id': proudct_id
                 },
-
-
             }).done(function (response) {
                 console.log(response);
                 //window.open(response,'_blank')
 
                 // adding previous result
+                $('#product_id').val(response.id);
                 $('#product_name').val(response.product_name);
                 $('#product_price').val(response.price);
                 $('#product_amount').val(response.product_amount);
@@ -631,27 +691,33 @@
         });
         /////////////////////if update pressed///////////////
         $('#updateproductshop').click(function (e) {
+            e.preventDefault();
             console.log('update pressed');
             let product_id = $(this).attr('value');
-            // console.log("product id is " + product_id);
+            console.log("product id is " + product_id);
 
-            // console.log($('#addShop')[0])
-            // let form = $('#addShop')[0];
-            // let localupdate = new FormData(form);
+            let form = $('#update_product')[0];
 
-            // $.ajax({
-            //     type: "POST",
-            //     url: "http://shemach.test/product/update/"+ product_id,
-            //     data: localupdate,
-            //     catch:false,
-            //     contentType: false,
-            //     processData: false
+            //console.log(formupdate);
+            let localupdateform = new FormData(form);
+            console.log(localupdateform);
+            $.ajax({
+                type: "PATCH",
+                url: "http://shemach.test/product/update/"+ product_id,
+                enctype: 'multipart/form-data',
+                data: { 'localformdata': localupdateform},
+                catch:false,
+                contentType: false,
+                processData: false
 
-            // }).done(function (response) {
-            //     console.log(response);
-            // }).fail(function (response) {
-            //     console.log(response);
-            // });
+            }).done(function (response) {
+                console.log('this is done update');
+                console.log(response);
+            }).fail(function (response) {
+                console.log('this is fail update');
+
+                console.log(response);
+            });
 
         });
 

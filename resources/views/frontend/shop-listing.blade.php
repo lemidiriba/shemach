@@ -87,7 +87,7 @@
                                             placeholder="{{ $statstic_data['max_price'] }}" type="number">
                                     </div>
                                 </div> <!-- form-row.// -->
-                                <button id="filterbtn" class="btn btn-block btn-outline btn-secondary">Apply</button>
+                                <button id="filterbtn" class="btn btn-block btn-outline btn-secondary">Filter</button>
                             </div> <!-- card-body.// -->
                         </div> <!-- collapse .// -->
                     </article> <!-- card-group-item.// -->
