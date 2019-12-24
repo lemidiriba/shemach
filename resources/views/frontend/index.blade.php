@@ -53,7 +53,7 @@
                                     src="{{ asset('shop_image/shop_logo/'.$shop_data->Shop_logo) }} ">
                                 <figcaption class="p-2">
                                     <h6 class="title">{{ ucwords($shop_data->shop_name) }} </h6>
-                                    <a href="#">Shop link</a>
+                                    <a href="/oneshop/{{ $shop_data->id }}">Shop link</a>
                                 </figcaption>
                             </figure>
 
@@ -123,7 +123,8 @@
 </section>
 <!-- ========================= SECTION ITEMS .END// ========================= -->
 <!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content padding-y-sm bg">
+
+{{-- <section class="section-content padding-y-sm bg">
     <div class="container">
 
         <header class="section-heading heading-line">
@@ -144,50 +145,51 @@
                                 amet, cLorem ipsum dolor sit amet, c</p>
                             <a href="#" class="btn btn-warning">Explore</a>
                             <img src="{{ asset('/img/frontend/items/item-sm.png') }}" height="200" class="img-bg
-    										zoom-in">
-                        </div>
-                    </article>
+zoom-in">
+</div>
+</article>
 
+</div>
+<!-- col.// -->
+<div class="col-md-9">
+    <ul class="row no-gutters border-cols">
+        <li class="col-6 col-md-3">
+            <a href="#" class="itembox">
+                <div class="card-body">
+                    <p class="word-limit">Home and kitchen electronic stuff collection
+                    </p>
+                    <img class="img-sm" src="{{ asset('/img/frontend/items/1.jpg') }}">
                 </div>
-                <!-- col.// -->
-                <div class="col-md-9">
-                    <ul class="row no-gutters border-cols">
-                        <li class="col-6 col-md-3">
-                            <a href="#" class="itembox">
-                                <div class="card-body">
-                                    <p class="word-limit">Home and kitchen electronic stuff collection
-                                    </p>
-                                    <img class="img-sm" src="{{ asset('/img/frontend/items/1.jpg') }}">
-                                </div>
-                            </a>
-                        </li>
+            </a>
+        </li>
 
-                    </ul>
-                    <ul class="row no-gutters border-cols">
-                        <li class="col-6 col-md-3">
-                            <a href="#" class="itembox">
-                                <div class="card-body">
-                                    <p class="word-limit">Home and kitchen electronic stuff </p>
-                                    <img class="img-sm" src="{{ asset('/img/frontend/items/1.jpg') }}">
-                                </div>
-                            </a>
-                        </li>
-
-                    </ul>
+    </ul>
+    <ul class="row no-gutters border-cols">
+        <li class="col-6 col-md-3">
+            <a href="#" class="itembox">
+                <div class="card-body">
+                    <p class="word-limit">Home and kitchen electronic stuff </p>
+                    <img class="img-sm" src="{{ asset('/img/frontend/items/1.jpg') }}">
                 </div>
-                <!-- col.// -->
-            </div>
-            <!-- row.// -->
+            </a>
+        </li>
 
-        </div>
-        <!-- card.// -->
+    </ul>
+</div>
+<!-- col.// -->
+</div>
+<!-- row.// -->
 
-    </div>
-    <!-- container .//  -->
-</section>
+</div>
+<!-- card.// -->
+
+</div>
+<!-- container .//  -->
+</section> --}}
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 <!-- ========================= SECTION REQUEST ========================= -->
+{{--
 <section class="section-request bg padding-y-sm">
     <div class="container">
         <header class="section-heading heading-line">
@@ -205,54 +207,54 @@
                         <a class="btn btn-warning" href="#">Detail info » </a>
                     </figcaption>
                     <img src="{{ asset('/img/frontend/banners/banner-request.jpg') }}">
-                </figure>
-            </div>
-            <!-- col // -->
-            <div class="col-md-4">
+</figure>
+</div>
+<!-- col // -->
+<div class="col-md-4">
 
-                <div class="card card-body">
-                    <h5 class="title py-4">One Request, Multiple Quotes.</h5>
-                    <form>
-                        <div class="form-group">
-                            <input class="form-control" name="" type="text">
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" name="" type="text">
-                                <span class="input-group-btn" style="border:0; width: 0;"></span>
-                                <select class="form-control">
-                                    <option>Pieces</option>
-                                    <option>Litres</option>
-                                    <option>Tons</option>
-                                    <option>Gramms</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group text-muted">
-                            <p>Select template type:</p>
-                            <label class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="option1">
-                                <span class="form-check-label">Request price</span>
-                            </label>
-                            <label class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="option2">
-                                <span class="form-check-label">Request a sample</span>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-warning">Request for quote</button>
-                        </div>
-                    </form>
+    <div class="card card-body">
+        <h5 class="title py-4">One Request, Multiple Quotes.</h5>
+        <form>
+            <div class="form-group">
+                <input class="form-control" name="" type="text">
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" name="" type="text">
+                    <span class="input-group-btn" style="border:0; width: 0;"></span>
+                    <select class="form-control">
+                        <option>Pieces</option>
+                        <option>Litres</option>
+                        <option>Tons</option>
+                        <option>Gramms</option>
+                    </select>
                 </div>
-
             </div>
-            <!-- col // -->
-        </div>
-        <!-- row // -->
-
+            <div class="form-group text-muted">
+                <p>Select template type:</p>
+                <label class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="option1">
+                    <span class="form-check-label">Request price</span>
+                </label>
+                <label class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="option2">
+                    <span class="form-check-label">Request a sample</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-warning">Request for quote</button>
+            </div>
+        </form>
     </div>
-    <!-- container // -->
-</section>
+
+</div>
+<!-- col // -->
+</div>
+<!-- row // -->
+
+</div>
+<!-- container // -->
+</section> --}}
 <!-- ========================= SECTION REQUEST .END// ========================= -->
 
 <!-- ========================= SECTION LINKS ========================= -->

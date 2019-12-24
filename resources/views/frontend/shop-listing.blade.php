@@ -91,7 +91,7 @@
                             </div> <!-- card-body.// -->
                         </div> <!-- collapse .// -->
                     </article> <!-- card-group-item.// -->
-                    <article class="card-group-item">
+                    {{-- <article class="card-group-item">
                         <header class="card-header">
                             <a href="#" data-toggle="collapse" data-target="#collapse44">
                                 <i class="icon-action fa fa-chevron-down"></i>
@@ -112,7 +112,7 @@
                                 </form>
                             </div> <!-- card-body.// -->
                         </div> <!-- collapse .// -->
-                    </article> <!-- card-group-item.// -->
+                    </article> <!-- card-group-item.// --> --}}
                 </div> <!-- card.// -->
 
                 <div class="card mt-2">
@@ -198,9 +198,9 @@
                                         <a href="/product-detail/{{ $item->id }}" class="btn btn-secondary"> <i
                                                 class="fas fa-info fa-fw"></i></a>
                                     </p>
-
+                                    {{--
                                     <a href=""><i class="fa fa-heart"></i> Add to
-                                        wishlist</a>
+                                        wishlist</a> --}}
                                 </div> <!-- action-wrap.// -->
                             </aside> <!-- col.// -->
 

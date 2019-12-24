@@ -4,8 +4,8 @@
 
 import _ from "lodash";
 import axios from "axios";
-import Swal from 'sweetalert2';
-import swal from 'sweetalert';
+//import Swal from 'sweetalert2';
+import Swal from 'sweetalert';
 
 
 import $ from "jquery";

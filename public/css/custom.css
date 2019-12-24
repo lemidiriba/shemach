@@ -5,3 +5,9 @@
     background-position: 0%;
     background-size: cover;
 }
+
+#jumbotron_home {
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 193, 7, 0.8)), url("../../img/frontend/banners/template_image.jpg");
+    background-position: 0%;
+    background-size: cover;
+}

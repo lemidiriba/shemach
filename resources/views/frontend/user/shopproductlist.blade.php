@@ -5,52 +5,89 @@
 
 @section('content')
 
-<div class="container">
-    <div class="jumbotron text-center">
-        <h1 class="display-4">Hello, {{ $logged_in_user->name }}</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-            featured content or information.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <p class="lead">
-            <button class="btn btn-warning btn-lg" href="#" role="button">Edit Shop</button>
-            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#exampleModal">
+<div class="card">
+    <div id="jumbotron_home" class="jumbotron text-center">
+        <div class="col-sm-6 mx-auto bg-dark-50 white text-center pb-5 text-white">
+            <h1 class="display-4">Hello, {{ $logged_in_user->name }}</h1>
 
-                <span role="button">Add Location</span>
-            </button>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center" id="exampleModalLabel">
-                                {{ $shop->shop_name }}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body is-valid">
-                            <form id="addLocation" action="" method="POST" role="form">
-                                <div class="input-group">
-                                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-                                    <input name="lng" type="number" min="o" value="" placeholder="Longtude"
-                                        class="form-control ml-1" required>
-                                    <input name="lat" type="number" min="0" value="" placeholder="Latitude"
-                                        class="form-control" required>
-                                    <div class="input-group-append">
-                                        <button id="add_location" class="btn btn-sm btn-warning"
-                                            type="submit">Add</button>
+            <hr class="my-4">
+            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p class="lead">
+                {{--
+            <button class="btn btn-warning btn-lg" href="#" role="button" data-toggle="modal"
+                data-target="#addshopproduct">Add Product</button> --}}
+
+                <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#exampleModal">
+
+                    <span role="button">Add Location</span>
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel">
+                                    {{ $shop->shop_name }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body is-valid">
+                                <form id="addLocation" action="" method="POST" role="form">
+                                    <div class="input-group">
+                                        <input type="hidden" name="shop_id" value="{{ $shop->id }}">
+                                        <input name="lng" type="number" min="o" value="" placeholder="Longtude"
+                                            class="form-control ml-1" required>
+                                        <input name="lat" type="number" min="0" value="" placeholder="Latitude"
+                                            class="form-control" required>
+                                        <div class="input-group-append">
+                                            <button id="add_location" class="btn btn-sm btn-warning"
+                                                type="submit">Add</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
+                                </form>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </p>
+            </p>
+        </div>
+
     </div>
 </div>
+{{--
+<div class="card">
+    <div class="row">
+        <div class="col-md-3">
+            <figure class="card card-product">
+                <div class="img-wrap"><img src="images/items/3.jpg"></div>
+                <figcaption class="info-wrap">
+                    <h4 class="title">Product name goes here</h4>
+                    <p class="desc">Some small description goes here</p>
+                    <div class="rating-wrap">
+                        <ul class="rating-stars">
+                            <li style="width:80%" class="stars-active">
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                    class="fa fa-star"></i><i class="fa fa-star"></i>
+                            </li>
+                            <li>
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                    class="fa fa-star"></i><i class="fa fa-star"></i>
+                            </li>
+                        </ul>
+                        <div class="label-rating">132 reviews</div>
+                        <div class="label-rating">154 orders </div>
+                    </div> <!-- rating-wrap.// -->
+                </figcaption>
+                <div class="bottom-wrap">
+                    <a href="" class="btn btn-sm btn-primary float-right">List Item</a>
+
+                </div> <!-- bottom-wrap.// -->
+            </figure>
+        </div> <!-- col // -->
+    </div> <!-- row.// -->
+</div> --}}
 
 <div class="card">
 
@@ -205,12 +242,12 @@
                                             <!-- data model for info btn -->
 
 
-                                            <button value="{{ $product_list->id }}" type="button"
-                                                class="col-12 btn-sm btn btn-default update_productbtn"
-                                                aria-label="Left Align" data-toggle="modal"
-                                                data-target="#updateproduct">
-                                                <i class="fa fa-edit fa-1x"></i>
-                                            </button>
+                                            {{-- <button value="{{ $product_list->id }}" type="button"
+                                            class="col-12 btn-sm btn btn-default update_productbtn"
+                                            aria-label="Left Align" data-toggle="modal"
+                                            data-target="#updateproduct">
+                                            <i class="fa fa-edit fa-1x"></i>
+                                            </button> --}}
 
                                             <button value="{{ $product_list->id }}" type="button"
                                                 class="col-12 btn btn-sm btn-default delete_product"
@@ -425,8 +462,10 @@
     <!-- /.card-body -->
 
 
-    <script>
-        $.ajaxSetup({
+
+</div>
+<script>
+    $.ajaxSetup({
 
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -721,6 +760,7 @@
 
         });
 
-    </script>
-</div>
+</script>
+
+
 @endsection

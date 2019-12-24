@@ -9,7 +9,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarTop">
+            {{-- <div class="collapse navbar-collapse" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown"><a href="#" class="nav-link
 									dropdown-toggle" data-toggle="dropdown"> Sourcing </a>
@@ -36,15 +36,16 @@
                             <li><a class="dropdown-item" href="#">For Suppliers </a></li>
                         </ul>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
+                </ul> --}}
+            {{-- <ul class="navbar-nav">
                     <li class="nav-item"><a href="#" class="nav-link"> Multi Request </a></li>
                     <li class="nav-item"><a href="http://bootstrap-ecommerce.com/" class="nav-link"> Download </a></li>
 
-                </ul>
-                <!-- navbar-nav.// -->
-            </div>
-            <!-- collapse.// -->
+                </ul> --}}
+            <!-- navbar-nav.// -->
+        </div>
+
+        <!-- collapse.// -->
         </div>
     </nav>
 

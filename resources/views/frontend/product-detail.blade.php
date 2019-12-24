@@ -6,6 +6,7 @@
 
 
 <!-- ========================= SECTION TOPBAR ========================= -->
+{{--
 <section class="section-topbar border-top padding-y-sm">
     <div class="container">
         <span>Supplier: Manufacturer of China Co., Ltd.</span> &nbsp <span class="text-warning">2 years</span>
@@ -17,20 +18,21 @@
             </div>
         </div>
     </div> <!-- container.// -->
-</section>
+</section> --}}
+
 <!-- ========================= SECTION TOPBAR .// ========================= -->
 
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content bg padding-y-sm">
     <div class="container">
-        <nav class="mb-3">
+        {{-- <nav class="mb-3">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Category name</a></li>
                 <li class="breadcrumb-item"><a href="#">Sub category</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Items</li>
             </ol>
-        </nav>
+        </nav> --}}
 
         <div class="row">
             <div class="col-xl-10 col-md-9 col-sm-12">
@@ -111,16 +113,17 @@
                                         <dl class="dlist-inline">
                                             <dt>Quantity: </dt>
                                             <dd>
-                                                <select class="form-control form-control-sm" style="width:70px;">
-                                                    @for ($i = 1; $i <= $product_data->available; $i++)
+                                                {{ $product_data->product_amount }}
+                                                {{-- <select class="form-control form-control-sm" style="width:70px;">
+                                                    @for ($i = 1; $i <= $product_data->product_amount; $i++)
                                                         <option value="{{ $i }}"> {{ $i }} </option>
-                                                        @endfor
+                                                @endfor
 
-                                                </select>
+                                                </select> --}}
                                             </dd>
                                         </dl> <!-- item-property .// -->
                                     </div> <!-- col.// -->
-                                    <div class="col-sm-7">
+                                    {{-- <div class="col-sm-7">
                                         <dl class="dlist-inline">
                                             <dt>Size: </dt>
                                             <dd>
@@ -132,7 +135,7 @@
 
                                             </dd>
                                         </dl> <!-- item-property .// -->
-                                    </div> <!-- col.// -->
+                                    </div> <!-- col.// --> --}}
                                 </div> <!-- row.// -->
                                 <hr>
                                 <a id="get-contact" href="" class="btn  btn-warning" value="{{ $shop_info->id }}"
@@ -164,7 +167,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#" class="btn  btn-outline-warning"> Supplier Location </a>
+                                {{-- <a href="#" class="btn  btn-outline-warning"> Supplier Location </a> --}}
                                 <!-- short-info-wrap .// -->
                             </article> <!-- card-body.// -->
                         </aside> <!-- col.// -->
