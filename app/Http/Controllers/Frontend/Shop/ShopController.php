@@ -175,7 +175,7 @@ class ShopController extends Controller
         //return '' . is_null($shopExist = ShopLocation::find($request->shop_id));
         if (count($shopExist) == 0) {
             $shopData = new ShopLocation();
-            //shop locaion exist update location
+            //no shop locaion exist
             $shopData->shop_id = $request->shop_id;
             $shopData->longitude = $request->lng;
             $shopData->latitude = $request->lat;
@@ -183,7 +183,7 @@ class ShopController extends Controller
 
             return ['message' => 'Location Added'];
         } else {
-            //no shop location add location
+            //shop location update location
             $shopExist1 = ShopLocation::find($shopExist[0]->id);
             $shopExist1->longitude = $request->lng;
             $shopExist1->latitude = $request->lat;

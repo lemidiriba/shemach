@@ -24,15 +24,16 @@
                     <aside class="col-md-3">
                         <h5 class="text-uppercase">My Markets</h5>
                         <ul class="menu-category">
-                            <li> <a href="#">Food &amp Beverage </a></li>
+                            <li> <a href="#">Shoes </a></li>
 
-                            <li class="has-submenu"> <a href="#">More category <i
-                                        class="icon-arrow-right pull-right"></i></a>
-                                <ul class="submenu">
-                                    <li> <a href="#">Food &amp Beverage </a></li>
+                            <li> <a href="#">Clothe </a>
 
-                                </ul>
                             </li>
+
+                            <li> <a href="#">Electronics</a>
+
+                            </li>
+
                         </ul>
 
                     </aside>

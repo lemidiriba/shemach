@@ -133,18 +133,18 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <select name="product_brand" class="form-control md-form" required>
+                                        <select name="product_type" class="form-control md-form" required>
                                             <option value="1">
-                                                Vender
+                                                Product Category
                                             </option>
 
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <select name="product_type" class="form-control md-form" required>
+                                        <select name="product_brand" class="form-control md-form" required>
                                             <option value="1">
-                                                Product Type
+                                                Brand
                                             </option>
 
                                         </select>

@@ -68,6 +68,7 @@
     },
     "dependencies": {
         "bootstrap-sweetalert": "^1.0.1",
+        "chart.js": "^2.9.3",
         "laravel-echo": "^1.6.1",
         "promise": "^8.0.3",
         "pusher-js": "^5.0.3",
