@@ -129,9 +129,9 @@
                                     <div class="form-group">
 
                                         <input name="product_name" type="text" class="form-control md-form"
-                                            id="exampleFormControlInput1" placeholder="Product Name" required>
+                                            id="exampleFormControlInput1" placeholder="Name" required>
                                     </div>
-
+                                    {{--
                                     <div class="form-group">
                                         <select name="product_type" class="form-control md-form" required>
                                             <option value="1">
@@ -139,15 +139,11 @@
                                             </option>
 
                                         </select>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group">
-                                        <select name="product_brand" class="form-control md-form" required>
-                                            <option value="1">
-                                                Brand
-                                            </option>
-
-                                        </select>
+                                        <input name="product_brand" class="form-control md-form" placeholder="Brand"
+                                            required>
                                     </div>
 
                                     <div class="form-group">
@@ -157,7 +153,7 @@
 
                                     <div class="form-group">
                                         <input name="product_amount" type="number" class="form-control md-form" min="1"
-                                            placeholder="Product Amount" required>
+                                            placeholder="Amount" required>
                                     </div>
                                     <div class="form-group">
 
@@ -230,7 +226,7 @@
                                     <td class="text-center align-content-between">{{ $product_list->price }}</td>
                                     <td class="text-center align-content-between">{{ $product_list->product_amount }}
                                     </td>
-                                    <td class="text-center align-content-between">{{ $product_list->product_vender_id }}
+                                    <td class="text-center align-content-between">{{ $product_list->product_brand }}
                                     </td>
                                     <td class="text-center">
                                         <div class="mt-5 row align-content-center">
@@ -242,12 +238,12 @@
                                             <!-- data model for info btn -->
 
 
-                                            {{-- <button value="{{ $product_list->id }}" type="button"
-                                            class="col-12 btn-sm btn btn-default update_productbtn"
-                                            aria-label="Left Align" data-toggle="modal"
-                                            data-target="#updateproduct">
-                                            <i class="fa fa-edit fa-1x"></i>
-                                            </button> --}}
+                                            <button value="{{ $product_list->id }}" type="button"
+                                                class="col-12 btn-sm btn btn-default update_productbtn"
+                                                aria-label="Left Align" data-toggle="modal"
+                                                data-target="#updateproduct">
+                                                <i class="fa fa-edit fa-1x"></i>
+                                            </button>
 
                                             <button value="{{ $product_list->id }}" type="button"
                                                 class="col-12 btn btn-sm btn-default delete_product"
@@ -323,8 +319,7 @@
 
 
                                                 <div class="col-4"><label class="list-group-item"
-                                                        for="vender_detail">Vender
-                                                        Detail</label></div>
+                                                        for="vender_detail">Brand</label></div>
 
                                                 <div class="col-8">
                                                     <li id="vender_detail" class="list-group-item"></li>
@@ -410,13 +405,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <select name="product_brand" class="form-control md-form" id="product_brand"
-                                        required>
-                                        <option value="1">
-                                            Vender
-                                        </option>
+                                    <input name="product_brand" class="form-control md-form" id="product_brand"
+                                        placeholder="Brand" required />
 
-                                    </select>
                                 </div>
 
                                 <div class="form-group">
@@ -569,7 +560,7 @@
                     $('#price').html(response.price);
                     $('#product_detail').html(response.product_detail_id);
                     $('#product_type').html(response.product_type_id);
-                    $('#vender_detail').html(response.product_vender_id);
+                    $('#vender_detail').html(response.product_brand);
                     $('#product_info').modal('show');
                 }
             ).fail(
@@ -716,7 +707,7 @@
                 $('#product_name').val(response.product_name);
                 $('#product_price').val(response.price);
                 $('#product_amount').val(response.product_amount);
-                $('#product_name').val(response.product_name);
+                $('#product_brand').val(response.product_brand);
                 $('#product_name').val(response.product_name);
                 $('#updateproductshop').attr('value', response.id);
 

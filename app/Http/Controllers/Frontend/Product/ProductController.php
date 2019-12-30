@@ -53,8 +53,7 @@ class ProductController extends Controller
 
         $this->validate($request, [
             'product_name' => ['required', 'string', 'max:191'],
-            'product_type' => ['required', 'integer'],
-            'product_brand' => ['required', 'integer'],
+            'product_brand' => ['required', 'string', 'max:191'],
             'product_price' => ['required', 'numeric', 'min:1'],
             'image_file' => ['image', 'mimes:jpeg,jpg,png,gif', 'max:20000'],
             'product_amount' => ['required', 'numeric', 'min:1'],
@@ -76,11 +75,12 @@ class ProductController extends Controller
         $product_data->product_image = $filenametostore;
         $product_data->product_amount = $request->product_amount;
         $product_data->price = $request->product_price;
-        $product_data->product_type_id = $request->product_type;
+
         //null 1st time
         $product_data->product_detail_id = 1; //'empty_for_now';
+        $product_data->product_type_id = 1;
 
-        $product_data->product_vender_id = $request->product_brand;
+        $product_data->product_brand = $request->product_brand;
         $product_data->shop_id = $request->shop;
         $product_data->available = 1;
 
@@ -142,8 +142,7 @@ class ProductController extends Controller
             $request,
             [
                 'product_name' => ['required', 'string', 'max:191'],
-                'product_type' => ['required', 'integer'],
-                'product_brand' => ['required', 'integer'],
+                'product_brand' => ['required', 'string', 'max:191'],
                 'product_price' => ['required', 'numeric', 'min:1'],
                 'image_file' => ['image', 'mimes:jpeg,jpg,png,gif', 'max:20000'],
                 'product_amount' => ['required', 'numeric', 'min:1'],

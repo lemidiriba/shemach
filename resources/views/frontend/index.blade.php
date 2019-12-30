@@ -125,11 +125,11 @@
 <!-- ========================= SECTION ITEMS .END// ========================= -->
 <!-- ========================= SECTION CONTENT ========================= -->
 
-{{-- <section class="section-content padding-y-sm bg">
+<section class="section-content padding-y-sm bg">
     <div class="container">
 
         <header class="section-heading heading-line">
-            <h4 class="title-section bg">MACHINERY</h4>
+            <h4 class="title-section bg">Near By Shop</h4>
         </header>
 
         <div class="card">
@@ -138,7 +138,7 @@
 
                     <article href="#" class="card-banner h-100 bg2">
                         <div class="card-body zoom-wrap">
-                            <h5 class="title">Machinery items for manufacturers</h5>
+                            <h5 class="title">Near By Shop Location </h5>
                             <p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
                                 magna
                                 aliqua. Lorem ipsum dolor sit amet, cLorem ipsum dolor sit amet, cLorem ipsum dolor
@@ -147,50 +147,50 @@
                             <a href="#" class="btn btn-warning">Explore</a>
                             <img src="{{ asset('/img/frontend/items/item-sm.png') }}" height="200" class="img-bg
 zoom-in">
-</div>
-</article>
+                        </div>
+                    </article>
 
-</div>
-<!-- col.// -->
-<div class="col-md-9">
-    <ul class="row no-gutters border-cols">
-        <li class="col-6 col-md-3">
-            <a href="#" class="itembox">
-                <div class="card-body">
-                    <p class="word-limit">Home and kitchen electronic stuff collection
-                    </p>
-                    <img class="img-sm" src="{{ asset('/img/frontend/items/1.jpg') }}">
                 </div>
-            </a>
-        </li>
+                <!-- col.// -->
+                <div class="col-md-9">
+                    <ul class="row no-gutters border-cols">
+                        <li class="col-6 col-md-3">
+                            <a href="#" class="itembox">
+                                <div class="card-body">
+                                    <p class="word-limit">Home and kitchen electronic stuff collection
+                                    </p>
+                                    <img class="img-sm" src="{{ asset('/img/frontend/items/1.jpg') }}">
+                                </div>
+                            </a>
+                        </li>
 
-    </ul>
-    <ul class="row no-gutters border-cols">
-        <li class="col-6 col-md-3">
-            <a href="#" class="itembox">
-                <div class="card-body">
-                    <p class="word-limit">Home and kitchen electronic stuff </p>
-                    <img class="img-sm" src="{{ asset('/img/frontend/items/1.jpg') }}">
+                    </ul>
+                    <ul class="row no-gutters border-cols">
+                        <li class="col-6 col-md-3">
+                            <a href="#" class="itembox">
+                                <div class="card-body">
+                                    <p class="word-limit">Home and kitchen electronic stuff </p>
+                                    <img class="img-sm" src="{{ asset('/img/frontend/items/1.jpg') }}">
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
                 </div>
-            </a>
-        </li>
+                <!-- col.// -->
+            </div>
+            <!-- row.// -->
 
-    </ul>
-</div>
-<!-- col.// -->
-</div>
-<!-- row.// -->
+        </div>
+        <!-- card.// -->
 
-</div>
-<!-- card.// -->
-
-</div>
-<!-- container .//  -->
-</section> --}}
+    </div>
+    <!-- container .//  -->
+</section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 <!-- ========================= SECTION REQUEST ========================= -->
-{{--
+
 <section class="section-request bg padding-y-sm">
     <div class="container">
         <header class="section-heading heading-line">
@@ -208,54 +208,54 @@ zoom-in">
                         <a class="btn btn-warning" href="#">Detail info » </a>
                     </figcaption>
                     <img src="{{ asset('/img/frontend/banners/banner-request.jpg') }}">
-</figure>
-</div>
-<!-- col // -->
-<div class="col-md-4">
-
-    <div class="card card-body">
-        <h5 class="title py-4">One Request, Multiple Quotes.</h5>
-        <form>
-            <div class="form-group">
-                <input class="form-control" name="" type="text">
+                </figure>
             </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <input class="form-control" name="" type="text">
-                    <span class="input-group-btn" style="border:0; width: 0;"></span>
-                    <select class="form-control">
-                        <option>Pieces</option>
-                        <option>Litres</option>
-                        <option>Tons</option>
-                        <option>Gramms</option>
-                    </select>
+            <!-- col // -->
+            <div class="col-md-4">
+
+                <div class="card card-body">
+                    <h5 class="title py-4">One Request, Multiple Quotes.</h5>
+                    <form>
+                        <div class="form-group">
+                            <input class="form-control" name="" type="text">
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" name="" type="text">
+                                <span class="input-group-btn" style="border:0; width: 0;"></span>
+                                <select class="form-control">
+                                    <option>Pieces</option>
+                                    <option>Litres</option>
+                                    <option>Tons</option>
+                                    <option>Gramms</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group text-muted">
+                            <p>Select template type:</p>
+                            <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="option1">
+                                <span class="form-check-label">Request price</span>
+                            </label>
+                            <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="option2">
+                                <span class="form-check-label">Request a sample</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-warning">Request for quote</button>
+                        </div>
+                    </form>
                 </div>
+
             </div>
-            <div class="form-group text-muted">
-                <p>Select template type:</p>
-                <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="option1">
-                    <span class="form-check-label">Request price</span>
-                </label>
-                <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="option2">
-                    <span class="form-check-label">Request a sample</span>
-                </label>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-warning">Request for quote</button>
-            </div>
-        </form>
+            <!-- col // -->
+        </div>
+        <!-- row // -->
+
     </div>
-
-</div>
-<!-- col // -->
-</div>
-<!-- row // -->
-
-</div>
-<!-- container // -->
-</section> --}}
+    <!-- container // -->
+</section>
 <!-- ========================= SECTION REQUEST .END// ========================= -->
 
 <!-- ========================= SECTION LINKS ========================= -->
@@ -342,7 +342,7 @@ zoom-in">
         }
     });
 
-    $(window).load( function () {
+    $(window).load(function () {
         $.ajax({
             method: "GET",
             url: 'http://shemach.test/shop/location/all',

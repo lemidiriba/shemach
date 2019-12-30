@@ -29,7 +29,6 @@ class HomeController extends Controller
      * @param ShopRepository $shopRepository
      */
     public function __construct(
-
         ShopRepository $shopRepository,
         ProductRepository $productRepositery,
         ShopLocationRepository $shopLocationRepository
@@ -45,7 +44,8 @@ class HomeController extends Controller
     {
 
         $shop_data = $this->shopRepository->all();
-        $product_data = $this->productRepositery->all()->random(7);
+        $product_data = $this->productRepositery->all(); //->random(7);
+
         return view('frontend.index')->with(['shop_datas' => $shop_data, 'product_datas' => $product_data]);
     }
     /**
@@ -86,11 +86,13 @@ class HomeController extends Controller
         }
 
         return view('frontend.shop-listing')
-            ->with([
-                'shop_data' => $shop_data,
-                'shop_products' => $shop_products,
-                'statstic_data' => $statstic_data
-            ]);
+            ->with(
+                [
+                    'shop_data' => $shop_data,
+                    'shop_products' => $shop_products,
+                    'statstic_data' => $statstic_data
+                ]
+            );
     }
 
     /**

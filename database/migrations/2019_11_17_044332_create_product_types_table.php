@@ -13,22 +13,23 @@ class CreateProductTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_types', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('type_name');
-            $table->unsignedBigInteger('product_brands_id');
-            $table->unsignedBigInteger('users_id');
-            $table->timestamps();
-        });
+        Schema::create(
+            'product_types',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('type_name');
+                $table->unsignedBigInteger('product_brands_id');
+                $table->unsignedBigInteger('users_id');
+                $table->timestamps();
+            }
+        );
 
-        Schema::table('product_types', function (Blueprint $table) {
-            $table->foreign('users_id')->references('id')->on('users');
-        });
-
-        Schema::table('product_types', function (Blueprint $table) {
-            $table->foreign('product_brands_id')->references('id')->on('product_brands');
-        });
-
+        Schema::table(
+            'product_types',
+            function (Blueprint $table) {
+                $table->foreign('users_id')->references('id')->on('users');
+            }
+        );
     }
 
     /**

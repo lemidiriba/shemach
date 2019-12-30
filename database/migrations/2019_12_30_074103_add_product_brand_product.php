@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnProductBrandIdToProduct extends Migration
+class AddProductBrandProduct extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,8 @@ class AddColumnProductBrandIdToProduct extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('product_vender_id')->after('product_type_id');
+            $table->string('product_brand')->after('product_amount');
         });
-
-        // Schema::table('products', function (Blueprint $table) {
-        //     $table->foreign('product_vender_id')->references('id')->on('brand_details');
-        // });
     }
 
     /**
@@ -29,8 +25,6 @@ class AddColumnProductBrandIdToProduct extends Migration
      */
     public function down()
     {
-        Schema::table('product', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }
